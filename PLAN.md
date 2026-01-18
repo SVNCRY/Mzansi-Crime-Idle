@@ -83,7 +83,7 @@ Reintroduce a mechanic inspired by the original GTA theme but adapted for Idle.
 
 ## 3. Asset & UI Updates
 - **Map Interface:** Replace the simple list tab with a stylized map of SA. Clicking a province opens the mission list for that area.
-- **UI Redesign:** Move from data tables to a Card-based interface (See `UI_REDESIGN_OPTIONS.md`).
+- **UI Redesign:** Move from data tables to a Card-based interface
 - **Visual Progression:** The background image (`images/bg.webp`) should change based on the highest unlocked region (e.g., Table Mountain for WC, Ponte Tower for Gauteng).
 
 ## 4. Platform Strategy
