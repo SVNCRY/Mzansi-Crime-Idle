@@ -158,12 +158,12 @@ var canSave = 1;
 
 var save = function () {
 	if (canSave) {
-		localStorage.setItem("idleFive5", JSON.stringify(p));
+		localStorage.setItem("idleSA1", JSON.stringify(p));
 	}
 };
 
 function load() {
-	const raw = localStorage.getItem("idleFive5");
+	const raw = localStorage.getItem("idleSA1");
 	if (!raw) {
 		// No save: start with a fresh clone of DEFAULT
 		p = structuredClone(DEFAULT); // or JSON.parse(JSON.stringify(DEFAULT)) if structuredClone not available
@@ -220,7 +220,7 @@ var restoreSave = function (save) {
 		var decoded = atob(save);
 		JSON.parse(decoded);
 		if (decoded) {
-			localStorage.setItem("idleFive5", decoded);
+			localStorage.setItem("idleSA1", decoded);
 			canSave = 0;
 			location.reload();
 		} else {

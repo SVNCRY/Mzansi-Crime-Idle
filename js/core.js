@@ -50,7 +50,7 @@ const DEFAULT = {
 var p = DEFAULT; 
 
 $(document).ready(function () {
-	if (localStorage.getItem("idleFive5") != null) load();
+	if (localStorage.getItem("idleSA1") != null) load();
 	setInterval(function () {
 		idleFiveLoop();
 	}, 1000);

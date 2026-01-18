@@ -1,4 +1,4 @@
-﻿function UpdateUI() {
+﻿﻿function UpdateUI() {
 	let ClicCashText = fix(p.Weapon.Power * (GetWeaponMult(p.Weapon.Id) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), "full");
 	let WeaponsNBR = 0;
 	let AllWeaponsNBR = -1;
@@ -8,7 +8,7 @@
 	//LEFT INFOS
 	$('#imagecash').attr('style', "background-image:url('" + weapons[p.Weapon.Id].img + "');");
 	//$("#status_cps").html(""); unused for now
-	$("#status_cash").html("<i class='fa-solid fa-dollar'></i>" + fix(p.cash, "full") + "<div class='sub header'>+ " + fix(getCashPS(), "full") + " per second</div>");
+	$("#status_cash").html("R " + fix(p.cash, "full") + "<div class='sub header'>+ " + fix(getCashPS(), "full") + " per second</div>");
 	$("#status_level").html(getRank(p.rank));
 	$("#status_weapon").html(weapons[p.Weapon.Id].name + " " + GenStarLabel(p.Stars[p.Weapon.Id]));
 	$("#status_weapon").attr("class", 'ui middle aligned bold content ' + p.Weapon.Class);
@@ -19,7 +19,7 @@
 	//CHARACTER
 	$("#prestigecount").html(p.prestige.level);
 	$("#prestigepricecount").html(getRank(p.prestige.price[0]));
-	$("#prestigepricecount2").html("<i class='fa-regular fa-dollar-sign'></i>" + fix(p.prestige.price[1], "full"));
+	$("#prestigepricecount2").html("R " + fix(p.prestige.price[1], "full"));
 	$("#character-text4").html(texts.character[5] + "<span class='jaune'> " + PrestigePoints + " </span> " + texts.character[6]);
 	$("#character-text5").html(texts.character[7] + "<span class='jaune'> " + fix(p.prestige.bonus, 9) + "</span> " + texts.character[8]);
 	//GENERAL STATS
@@ -40,13 +40,13 @@
 	$("#totalweaponsbought").html("Total weapons bought: <font class='jaune'>" + p.stats.totalweaponsbought + "</font>");
 	$("#totalweaponrerolled").html("Total weapon rerolled: <font class='jaune'>" + p.stats.totalweaponrerolled + "</font>");
 	//CASH STATS
-	$("#cashcount").html("<span class='desc tc-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(p.cash, "full") + "</span> " + texts.stats[6]);
-	$("#cashpscount").html("<span class='desc tc-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(getCashPS(), "full") + "</span> " + texts.stats[7]);
-	$("#addcashcount").html("<span class='desc tc-dollar'><i class='fa-regular fa-dollar-sign'></i>" + ClicCashText + "</span> " + texts.stats[8]);
-	$("#character_totalspentcash").html("<span class='desc tc-spent-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(p.stats.character_totalspentcash, "full") + "</span> spent with character");
-	$("#character_totalcash").html("<span class='desc tc-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(p.stats.character_totalcash, "full") + "</span> earned with character");
-	$("#totalspentcash").html("<span class='desc tc-spent-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(p.stats.totalspentcash, "full") + "</span> spent in total");
-	$("#totalcash").html("<span class='desc tc-dollar'><i class='fa-regular fa-dollar-sign'></i>" + fix(p.stats.totalcash, "full") + "</span> earned in total");
+	$("#cashcount").html("<span class='desc tc-dollar'>R " + fix(p.cash, "full") + "</span> " + texts.stats[6]);
+	$("#cashpscount").html("<span class='desc tc-dollar'>R " + fix(getCashPS(), "full") + "</span> " + texts.stats[7]);
+	$("#addcashcount").html("<span class='desc tc-dollar'>R " + ClicCashText + "</span> " + texts.stats[8]);
+	$("#character_totalspentcash").html("<span class='desc tc-spent-dollar'>R " + fix(p.stats.character_totalspentcash, "full") + "</span> spent with character");
+	$("#character_totalcash").html("<span class='desc tc-dollar'>R " + fix(p.stats.character_totalcash, "full") + "</span> earned with character");
+	$("#totalspentcash").html("<span class='desc tc-spent-dollar'>R " + fix(p.stats.totalspentcash, "full") + "</span> spent in total");
+	$("#totalcash").html("<span class='desc tc-dollar'>R " + fix(p.stats.totalcash, "full") + "</span> earned in total");
 	//MULTIPLIERS STATS
 	$("#prestigemult").html("Prestige multiplier at <font class='jaune bold'>" + fix(p.prestige.bonus, 9) + "</font>");
 	$("#cashmult").html("Cash (stamina) multiplier at <font class='jaune bold'>" + fix((p.prestige.bonus + (p.prestige.multipliers[0] * 0.1)), 9) + "</font>");
@@ -146,9 +146,9 @@ function UpdateMissions(onlyId) {
 function UpdateMissionsDiv(i) {
 	$("#mission-" + i).attr("class", p.missions[i] < 1 ? '' : 'item-active');
 	$("#mission-" + i + "-level").html(p.missions[i]);
-	$("#mission-" + i + "-value").html("<i class='fa-regular fa-dollar-sign'></i>" + fix(GetMissionPrice(i, 1), 1));
+	$("#mission-" + i + "-value").html("R " + fix(GetMissionPrice(i, 1), 1));
 	$("#mission-" + i + "-production").attr("class", "ui center aligned tc-dollar " + (p.missions[i] < 1 ? '' : 'bold'));
-	$("#mission-" + i + "-production").html("<i class='fa-regular fa-dollar-sign'></i>" + fix((missions[i].value * p.missions[i]) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1)), 1) + texts.missions[5]);
+	$("#mission-" + i + "-production").html("R " + fix((missions[i].value * p.missions[i]) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1)), 1) + texts.missions[5]);
 	$("#mission-" + i + "-btnB1").attr("class", "ui green dollar button " + (GetMissionPrice(i, 1) > p.cash ? ' disabled' : ''));
 	$("#mission-" + i + "-btnB10").attr("class", "ui green dollar button " + (GetMissionPrice(i, 10) > p.cash ? ' disabled' : ''));
 	$("#mission-" + i + "-btnB100").attr("class", "ui green dollar button " + (GetMissionPrice(i, 100) > p.cash ? ' disabled' : ''));
@@ -193,17 +193,17 @@ function UpdateWeapons() {
 		let COST = p.WeaponBought[i] < 1 ? fix(weapons[i].price, 1) : fix(weapons[i].price * 1.25, 1);
 		let PURCHASED = p.WeaponBought[i] > 0 ? 'blanc' : 'rouge';
 		let PURCHASED_TEXT = p.WeaponBought[i] > 0 ? "" : `<span class="ui move left ${PURCHASED}"><i class="fa-solid fa-lock-keyhole"></i></span>`;
-		let ENABLE_BTN = weapons[i].price > p.cash ? 'basic red' : 'green dollar';
-		let PURCHASE_TEXT = p.WeaponBought[i] > 0 ? "<div class='hidden content'><i class='fa-regular fa-dollar-sign'></i>" + COST + "</div><div class='visible content'>Roll stats</div>" : "Purchase";
+		let ENABLE_BTN = weapons[i].price > p.cash ? 'basic red' : 'green';
+		let PURCHASE_TEXT = p.WeaponBought[i] > 0 ? "<div class='hidden content'>R " + COST + "</div><div class='visible content'>Roll stats</div>" : "Purchase";
 		let PURCHASE_BTN = p.WeaponBought[i] > 0 ? "fluid ui vertical animated button" : "fluid ui button";
 		let EQUIP_BTN = p.WeaponBought[i] < 1 ? " disabled" : "";
 		let EQUIP_TEXT = "Equip";
 		if (ENABLED === 'item-active' && p.Weapon.Id == i) { ENABLED = 'item-equipped'; EQUIP_BTN = " inverted basic"; EQUIP_TEXT = "Equipped"; }
-		if (p.Stars[i] === 10 && p.WeaponBought[i] > 0) { PURCHASE_TEXT = "Maxed"; PURCHASE_BTN = "fluid ui button disabled"; ENABLE_BTN = "basic green dollar"; }
+		if (p.Stars[i] === 10 && p.WeaponBought[i] > 0) { PURCHASE_TEXT = "Maxed"; PURCHASE_BTN = "fluid ui button disabled"; ENABLE_BTN = "basic green"; }
 		$("#weapon-" + i).attr("class", "ui center aligned " + ENABLED);
 		$("#weapon-" + i + "-name").html(`${PURCHASED_TEXT}${GenStarLabel(p.Stars[i])} <font class="${getQuality(p.Stars[i])}">${weapons[i].name}</font> </br><i class="fa-thin fa-crosshairs-simple rouge"></i> ${fix(weapons[i].power * (GetWeaponMult(i) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), 1)}`);
 		$("#weapon-" + i + "-price").attr("class", "ui center aligned " + CANBUY);
-		$("#weapon-" + i + "-price").html("<i class='fa-regular fa-dollar-sign'></i>" + COST);
+		$("#weapon-" + i + "-price").html("R " + COST);
 		$("#weapon-" + i + "-purchase").html(PURCHASE_TEXT);
 		$("#weapon-" + i + "-purchase").attr("class", PURCHASE_BTN + " " + ENABLE_BTN);
 		$("#weapon-" + i + "-equip").html(EQUIP_TEXT);
