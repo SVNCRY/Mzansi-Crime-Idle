@@ -85,5 +85,17 @@ Reintroduce a mechanic inspired by the original GTA theme but adapted for Idle.
 - **Map Interface:** Replace the simple list tab with a stylized map of SA. Clicking a province opens the mission list for that area.
 - **Visual Progression:** The background image (`images/bg.webp`) should change based on the highest unlocked region (e.g., Table Mountain for WC, Ponte Tower for Gauteng).
 
+## 4. Platform Strategy
+**Goal:** Make the game accessible on all devices via Progressive Web App (PWA) standards and native wrappers.
+
+### A. Progressive Web App (PWA)
+- **Offline Play:** Service Workers to cache assets.
+- **Installable:** Web App Manifest to allow "Add to Home Screen".
+
+### B. Native Wrappers
+- **Mobile:** Use **Capacitor** to publish to Play Store/App Store.
+- **Desktop:** Use **Electron** to publish to Steam/Itch.io.
+- **UI Adaptation:** Ensure touch targets are accessible (44x44px) and remove hover-dependent logic.
+
 ---
 *This plan aims to transition the game from a simple clicker to a strategy-lite management game.*
