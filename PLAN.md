@@ -33,15 +33,45 @@ Instead of a flat list, missions will be grouped by Province. Unlocking a provin
 - **Missions:** Smash and Grab, CIT Heist, Tender Fraud, Emperors Palace Heist.
 - **Unique Mechanic:** High risk, high reward.
 
-#### **Western Cape (The Ganglands)**
-*Focus: Organized Crime & Export*
-- **Missions:** Perlemoen Smuggling, Tik Labs, Tourist Extortion, Parliament Takeover.
-- **Unique Mechanic:** "Turf" control increases passive income.
+#### **Mpumalanga (The Powerhouse)**
+*Focus: Energy & Coal*
+- **Missions:** Coal Truck Hijacking, Eskom Sabotage, Kruger Park Raids.
+- **Unique Mechanic:** "Load Shedding" - Global income fluctuates based on grid stability.
+
+#### **Limpopo (The Gateway)**
+*Focus: Smuggling & Wildlife*
+- **Missions:** Cigarette Smuggling (Beitbridge), Rhino Horn Poaching, Game Farm Laundering.
+- **Unique Mechanic:** "Border Control" - RNG chance to lose shipment vs high reward.
+
+#### **North West (The Platinum Belt)**
+*Focus: Mining & Gambling*
+- **Missions:** Illegal Platinum Mining, Sun City Casino Rigging.
+- **Unique Mechanic:** "Zama Zama Tunnels" - High risk of collapse vs massive payout.
+
+#### **Free State (The Breadbasket)**
+*Focus: Agriculture & Gold*
+- **Missions:** Grain Silo Theft, Illegal Gold Processing, Lesotho Border Contraband.
+- **Unique Mechanic:** "Harvest Season" - Seasonal income boosts.
+
+#### **Northern Cape (The Desert)**
+*Focus: Diamonds & Solar*
+- **Missions:** Diamond Smuggling (Kimberley), Solar Farm Cable Theft.
+- **Unique Mechanic:** "Isolation" - Lower police heat but higher mission unlock costs.
 
 #### **KwaZulu-Natal (The Harbor)**
 *Focus: Logistics & Import/Export*
 - **Missions:** Sugar Cane Arson, Container Theft, Cross-Border Car Syndicate.
 - **Unique Mechanic:** Shipping routes that deliver bulk cash periodically rather than per second.
+
+#### **Eastern Cape (The Windy City)**
+*Focus: Automotive & Livestock*
+- **Missions:** Cattle Rustling, VW Plant Heist, University Tender Scams.
+- **Unique Mechanic:** "Strike Action" - Temporarily halts production but increases future payouts.
+
+#### **Western Cape (The Ganglands)**
+*Focus: Organized Crime & Export*
+- **Missions:** Perlemoen Smuggling, Tik Labs, Tourist Extortion, Parliament Takeover.
+- **Unique Mechanic:** "Turf" control increases passive income.
 
 ### B. The "Heat" System (Wanted Level)
 Reintroduce a mechanic inspired by the original GTA theme but adapted for Idle.
