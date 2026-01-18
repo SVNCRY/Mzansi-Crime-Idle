@@ -17,7 +17,9 @@ This document outlines the planned update schedule, transitioning the game from 
   - [ ] Adjust `cost_scale` in `js/data.js` to smooth the Mid-game to Late-game transition.
 - **UI Polish:**
   - [ ] Refactor CSS for better mobile responsiveness.
-  - [ ] **Redesign:** Evaluate options in `UI_REDESIGN_OPTIONS.md`.
+  - [x] **Framework Decision:** Selected **Tailwind CSS**.
+  - [x] **Component Library:** Selected **DaisyUI**.
+  - [x] **Build Setup:** Configured Tailwind + DaisyUI build pipeline.
   - [ ] **Implementation:** Convert Mission/Weapon lists from Tables to Cards (Option 1).
   - [ ] Prepare the interface (tabs/layout) for the upcoming Map tab.
 
