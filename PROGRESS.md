@@ -8,8 +8,8 @@
 ## Phase 2: Data Overhaul (`js/data.js`)
 - [x] **Missions:** Rename GTA V heists to SA equivalents (e.g., CIT Heist, Taxi Wars).
 - [x] **Weapons:** Rename generic weapons to local variants (e.g., Okapi, R5 Rifle, Sjambok).
-- [ ] **Achievements:** Update names/descriptions to match new missions.
-- [ ] **Tutorial & UI Text:** Rewrite intro text.
+- [x] **Achievements:** Update names/descriptions to match new missions.
+- [x] **Tutorial & UI Text:** Rewrite intro text.
 
 ## Phase 3: UI & Visual Updates (`js/ui.js`)
 - [x] **Currency Symbols:** Replace icons and strings with `R`.
@@ -27,7 +27,7 @@
 
 ### Current Status
 - **Phase 1:** Partially Complete (Currency done).
-- **Phase 2:** Partially Complete (Missions and Weapons renamed).
+- **Phase 2:** Complete.
 - **Phase 3:** Partially Complete (Currency symbols done).
 - **Phase 4:** Partially Complete (Save key done).
 - **Phase 5:** Not Started.
