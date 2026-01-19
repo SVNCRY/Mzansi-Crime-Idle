@@ -18,7 +18,7 @@ This project uses a **Dual-License** model to ensure the game remains open-sourc
 
 - **Core:** HTML5, CSS3, JavaScript (ES6+)
 - **UI Framework:** Tailwind CSS + DaisyUI
-- **Libraries:** jQuery, BigNumber.js, Lodash
+- **Libraries:** BigNumber.js, Lodash
 - **Build Tool:** Currently static HTML/JS.
 
 ## 📏 Coding Standards

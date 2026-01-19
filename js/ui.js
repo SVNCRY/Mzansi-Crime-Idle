@@ -7,7 +7,7 @@
 	const prestigeText = p.prestige.price[0] <= p.rank && p.prestige.price[1] <= p.cash ? texts.infos[0] : "";
 	//LEFT INFOS
 	document.getElementById('imagecash').style.backgroundImage = "url('" + weapons[p.Weapon.Id].img + "')";
-	//$("#status_cps").html(""); unused for now
+	//document.getElementById("status_cps").innerHTML = ""; unused for now
 	document.getElementById("status_cash").innerHTML = "R " + fix(p.cash, "full") + "<div class='sub header'>+ " + fix(getCashPS(), "full") + " per second</div>";
 	document.getElementById("status_level").innerHTML = getRank(p.rank);
 	document.getElementById("status_weapon").innerHTML = weapons[p.Weapon.Id].name + " " + GenStarLabel(p.Stars[p.Weapon.Id]);
@@ -144,14 +144,13 @@ function MissionList() {
 }
 
 function UpdateMissions(onlyId) {
-	if (onlyId !== undefined) { var i = onlyId; UpdateMissionsDiv(i); return; }
+	if (onlyId !== undefined) { const i = onlyId; UpdateMissionsDiv(i); return; }
 	for (const i in missions) {
 		UpdateMissionsDiv(i);
 	}
 }
 
 function UpdateMissionsDiv(i) {
-	// $("#mission-" + i).attr("class", p.missions[i] < 1 ? '' : 'item-active'); // Card style handles this differently
 	document.getElementById("mission-" + i + "-level").innerHTML = p.missions[i];
 	document.getElementById("mission-" + i + "-next").innerHTML = getNextMilestone(p.missions[i]);
 	document.getElementById("mission-" + i + "-value").innerHTML = "Cost: R " + fix(GetMissionPrice(i, 1), 1);
@@ -389,7 +388,6 @@ function SuccessList() {
 		if (succes.type === 0) { document.getElementById('Stab0').insertAdjacentHTML('beforeend', succesDIV); } // Tutorial
 		if (succes.type === 1) { document.getElementById('Stab1').insertAdjacentHTML('beforeend', succesDIV); } // Cash
 		if (succes.type === 2) { document.getElementById('Stab2').insertAdjacentHTML('beforeend', succesDIV); } // Missions
-		//if (succes.type === 3) { $('#Stab2').append(succesDIV); } Unused
 		if (succes.type === 4) { document.getElementById('Stab0').insertAdjacentHTML('beforeend', succesDIV); } // Ranks
 		if (succes.type === 5) { document.getElementById('Stab3').insertAdjacentHTML('beforeend', succesDIV); } // Prestige
 	}

@@ -12,7 +12,7 @@ Here are 12 options that work well with Tailwind, focusing on those compatible w
 *   **Pros:**
     *   **Clean HTML:** Writes like Bootstrap (`class="btn btn-primary"`) but compiles to Tailwind utilities.
     *   **Theming:** 29+ built-in themes (Cyberpunk, Dark, Luxury) perfect for a game.
-    *   **No JS:** Pure CSS for most things (uses checkboxes for toggle state), easy to integrate with existing jQuery logic.
+    *   **No JS:** Pure CSS for most things (uses checkboxes for toggle state), easy to integrate with existing logic.
 *   **Cons:** Requires a build step (PostCSS/Tailwind CLI) to use the plugin effectively.
 
 ## 2. Konsta UI (Best for Mobile/PWA)

@@ -199,14 +199,14 @@ function load() {
 
 
 function exportSave() {
-	$("#exportBody").html("<textarea id='saveCode'>" + btoa(JSON.stringify(p)) + "</textarea>");
+	document.getElementById("exportBody").innerHTML = "<textarea id='saveCode'>" + btoa(JSON.stringify(p)) + "</textarea>";
 	const copyText = document.getElementById("saveCode");
 	copyText.select();
 	copyText.setSelectionRange(0, 99999);
 	document.execCommand("copy");
 	window.getSelection().removeAllRanges();
 	MESSAGE("Save Exported", "Your save has been copied into you clipboard.");
-	$("#exportBody").html("");
+	document.getElementById("exportBody").innerHTML = "";
 }
 
 const importSave = function () {
@@ -225,10 +225,10 @@ const restoreSave = function (save) {
 			canSave = 0;
 			location.reload();
 		} else {
-			$("#debugtext").html("ERROR: Invalid Save Data");
+			document.getElementById("debugtext").innerHTML = "ERROR: Invalid Save Data";
 		}
 	} catch (err) {
-		$("#debugtext").html("ERROR: Invalid Save Data");
+		document.getElementById("debugtext").innerHTML = "ERROR: Invalid Save Data";
 	}
 };
 
