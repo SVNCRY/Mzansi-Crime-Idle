@@ -1,38 +1,38 @@
 const missions = {
     // Early-game
-    0: { name: 'Smash and Grab', price: 10, value: 0.1, level: 0 },
-    1: { name: 'Spaza Shop Robbery', price: 25, value: 0.5, level: 5 },
-    2: { name: 'ATM Bombing', price: 50, value: 1, level: 20 },
-    3: { name: 'CIT Heist', price: 200, value: 5, level: 50 },
-    4: { name: 'Taxi War', price: 500, value: 10, level: 100 },
-    5: { name: 'Chop Shop Operation', price: 1250, value: 50, level: 200 },
+    0: { name: 'Smash and Grab', price: 10, value: 0.1, level: 0, regionId: 0 }, // Gauteng
+    1: { name: 'Spaza Shop Robbery', price: 25, value: 0.5, level: 5, regionId: 0 },
+    2: { name: 'ATM Bombing', price: 50, value: 1, level: 20, regionId: 0 },
+    3: { name: 'CIT Heist', price: 200, value: 5, level: 50, regionId: 1 }, // Mpumalanga (Req 50)
+    4: { name: 'Taxi War', price: 500, value: 10, level: 100, regionId: 1 },
+    5: { name: 'Chop Shop Operation', price: 1250, value: 50, level: 200, regionId: 2 }, // Limpopo (Req 150)
     
     // Mid-game
-    6: { name: 'ID Fraud Ring', price: 3000, value: 100, level: 300 },
-    7: { name: 'Dagga Plantation', price: 7500, value: 250, level: 400 },
-    8: { name: 'Cable Theft Syndicate', price: 20000, value: 500, level: 500 },
-    9: { name: 'Tender Fraud', price: 50000, value: 1500, level: 600 },
-    10: { name: 'C-Max Prison Break', price: 125000, value: 3000, level: 700 },
-    11: { name: 'Tik Lab', price: 300000, value: 7500, level: 800 },
-    12: { name: 'Nyaope Distribution', price: 750000, value: 15000, level: 900 },
-    13: { name: 'Illegal Mining (Zama Zamas)', price: 2000000, value: 40000, level: 1000 },
+    6: { name: 'ID Fraud Ring', price: 3000, value: 100, level: 300, regionId: 3 }, // North West (Req 300)
+    7: { name: 'Dagga Plantation', price: 7500, value: 250, level: 400, regionId: 3 },
+    8: { name: 'Cable Theft Syndicate', price: 20000, value: 500, level: 500, regionId: 4 }, // Free State (Req 500)
+    9: { name: 'Tender Fraud', price: 50000, value: 1500, level: 600, regionId: 4 },
+    10: { name: 'C-Max Prison Break', price: 125000, value: 3000, level: 700, regionId: 4 },
+    11: { name: 'Tik Lab', price: 300000, value: 7500, level: 800, regionId: 5 }, // Northern Cape (Req 800)
+    12: { name: 'Nyaope Distribution', price: 750000, value: 15000, level: 900, regionId: 5 },
+    13: { name: 'Illegal Mining (Zama Zamas)', price: 2000000, value: 40000, level: 1000, regionId: 5 },
 
     // Late-game
-    14: { name: 'Perlemoen Smuggling',     price: 5000000, value:     100000, level: 1100 },
-    15: { name: 'State Capture',           price: 12500000, value:    250000, level: 1200 },
-    16: { name: 'Arms Deal',               price: 30000000, value:    600000, level: 1300 },
-    17: { name: 'Cross-Border Car Syndicate', price: 75000000, value: 1500000, level: 1400 },
-    18: { name: 'Mandrax Lab',             price: 200000000, value:   4000000, level: 1500 },
-    19: { name: 'Counterfeit Goods Factory', price: 500000000, value: 10000000, level: 1600 },
-    20: { name: 'Protection Racket',       price: 1250000000, value:  25000000, level: 1700 },
-    21: { name: 'Private Security Front',  price: 3000000000, value:  60000000, level: 1800 },
+    14: { name: 'Perlemoen Smuggling',     price: 5000000, value:     100000, level: 1100, regionId: 5 },
+    15: { name: 'State Capture',           price: 12500000, value:    250000, level: 1200, regionId: 6 }, // KZN (Req 1200)
+    16: { name: 'Arms Deal',               price: 30000000, value:    600000, level: 1300, regionId: 6 },
+    17: { name: 'Cross-Border Car Syndicate', price: 75000000, value: 1500000, level: 1400, regionId: 6 },
+    18: { name: 'Mandrax Lab',             price: 200000000, value:   4000000, level: 1500, regionId: 6 },
+    19: { name: 'Counterfeit Goods Factory', price: 500000000, value: 10000000, level: 1600, regionId: 7 }, // Eastern Cape (Req 1800)
+    20: { name: 'Protection Racket',       price: 1250000000, value:  25000000, level: 1700, regionId: 7 },
+    21: { name: 'Private Security Front',  price: 3000000000, value:  60000000, level: 1800, regionId: 7 },
 
     // End-game
-    22: { name: 'Sun City Heist',          price: 7500000000, value: 150000000, level: 2000 },
-    23: { name: 'Parliament Takeover',     price: 20000000000, value: 400000000, level: 2100 },
-    24: { name: 'SA Reserve Bank Heist',   price: 50000000000, value: 1000000000, level: 2200 },
-    25: { name: 'Emperors Palace Heist',   price: 125000000000, value: 2500000000, level: 2300 },
-    26: { name: 'Guptas Compound Raid',    price: 300000000000, value: 6000000000, level: 2500 },
+    22: { name: 'Sun City Heist',          price: 7500000000, value: 150000000, level: 2000, regionId: 7 },
+    23: { name: 'Parliament Takeover',     price: 20000000000, value: 400000000, level: 2100, regionId: 8 }, // Western Cape (Req 2500)
+    24: { name: 'SA Reserve Bank Heist',   price: 50000000000, value: 1000000000, level: 2200, regionId: 8 },
+    25: { name: 'Emperors Palace Heist',   price: 125000000000, value: 2500000000, level: 2300, regionId: 8 },
+    26: { name: 'Guptas Compound Raid',    price: 300000000000, value: 6000000000, level: 2500, regionId: 9 }, // Kingpin (Req 5000)
 };
 
 const weapons = [

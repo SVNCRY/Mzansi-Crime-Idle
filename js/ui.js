@@ -1,4 +1,18 @@
-﻿﻿function UpdateUI() {
+﻿﻿﻿﻿﻿let activeRegion = null;
+let lastBackgroundId = -1;
+
+function openRegion(id) {
+	activeRegion = parseInt(id);
+	MissionList();
+	UpdateMissions();
+}
+
+function closeRegion() {
+	activeRegion = null;
+	MissionList();
+}
+
+function UpdateUI() {
 	const ClicCashText = fix(p.Weapon.Power * (GetWeaponMult(p.Weapon.Id) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), "full");
 	let WeaponsNBR = 0;
 	let AllWeaponsNBR = -1;
@@ -64,11 +78,15 @@
 
 	document.getElementById("successcount").innerHTML = "<font class='SuccessText'>" + SuccessCount() + "</font>/" + success.length + " " + texts.success[0];
 	SuccessList();
+	UpdateBackground();
 }
 
 function UpdateTabs() {
 	if (document.getElementById('tab1').style.display !== 'none') UpdateWeapons();
-	if (document.getElementById('tab2').style.display !== 'none') UpdateMissions();
+	if (document.getElementById('tab2').style.display !== 'none') {
+		if (activeRegion === null) UpdateMap();
+		else UpdateMissions();
+	}
 	if (document.getElementById('tab3').style.display !== 'none') VehicleList();
 }
 
@@ -104,54 +122,110 @@ function UpdateTexts() {
 	document.getElementById("statistics").innerHTML = texts.stats[1];
 	document.getElementById("version").innerHTML = texts.stats[12] + " " + version;
 	document.title = "Mzansi Crime Idle " + version;
+	MissionList();
 }
 
 //MISSIONS TABLE
 function MissionList() {
 	document.getElementById('missions').innerHTML = "";
-	for (const i in missions) {
-		const CONTENT = `
-			<div class="card bg-base-200 shadow-xl" id="mission-${i}">
+
+	if (activeRegion === null) {
+		// Render Regions Map (List View)
+		for (const id in regions) {
+			const r = regions[id];
+			const unlocked = isRegionUnlocked(id);
+			const progress = getRegionUnlockProgress(id);
+			
+			let clickAction = unlocked ? `openRegion(${id})` : "";
+			let cardClass = unlocked ? "bg-base-200 cursor-pointer hover:bg-base-300" : "bg-base-200 opacity-70";
+			let badge = unlocked ? `<div class="badge badge-success">Unlocked</div>` : `<div class="badge badge-warning">Locked</div>`;
+			
+			let progressBar = "";
+			if (!unlocked) {
+				 progressBar = `<div class="mt-2" id="region-locked-content-${id}">
+									<progress id="region-progress-${id}" class="progress progress-warning w-full" value="${progress}" max="100"></progress>
+									<div class="text-xs mt-1">Rank ${p.rank} / ${r.reqRank}</div>
+								</div>`;
+			}
+
+			const CONTENT = `
+			<div class="card ${cardClass} shadow-xl mb-4" onclick="${clickAction}" id="region-card-${id}">
 				<div class="card-body p-4">
-					<h3 class="card-title text-base">${missions[i].name}</h3>
-					<div class="text-xs text-base-content/70">
-						Level <span id="mission-${i}-level">0</span>
-						<span class="float-right">Next x2: <span id="mission-${i}-next" class="text-warning">25</span></span>
-					</div>
-					<div class="flex justify-between mt-2">
-						<div class="badge badge-neutral" id="mission-${i}-production">R0/s</div>
-						<div class="badge badge-neutral" id="mission-${i}-value">Cost: R0</div>
-					</div>
-					<div class="card-actions justify-center mt-4 flex-col gap-2">
-						<div class="join w-full">
-							<button id="mission-${i}-btnB1" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 1);">+1</button>
-							<button id="mission-${i}-btnB10" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 10);">+10</button>
-							<button id="mission-${i}-btnB100" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 100);">+100</button>
-						</div>
-						<div class="join w-full">
-							<button id="mission-${i}-btnS1" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 1);">-1</button>
-							<button id="mission-${i}-btnS10" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 10);">-10</button>
-							<button id="mission-${i}-btnS100" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 100);">-100</button>
-						</div>
-					</div>
+					<h2 class="card-title text-lg">${r.name} ${badge}</h2>
+					<p class="text-sm">${r.subtitle}</p>
+					<p class="text-xs italic opacity-70">${r.focus}</p>
+					${progressBar}
 				</div>
 			</div>`;
-		document.getElementById('missions').insertAdjacentHTML('beforeend', CONTENT);
-		if (p.rank >= missions[i].level) document.getElementById("mission-" + i).style.display = ''; else document.getElementById("mission-" + i).style.display = 'none';
+			document.getElementById('missions').insertAdjacentHTML('beforeend', CONTENT);
+		}
+		
+		const nextRegion = getNextRegionToUnlock();
+		const msg = nextRegion ? `Next region: ${nextRegion.name} at Rank ${nextRegion.reqRank}` : "All regions unlocked!";
+		document.getElementById("tab2").insertAdjacentHTML('beforeend', `<div id='NextUnlockInfo' class='alert alert-info mt-4'>${msg}</div>`);
+
+	} else {
+		// Render Missions for Active Region
+		const regionName = regions[activeRegion].name;
+		document.getElementById('missions').insertAdjacentHTML('beforeend', `
+			<div class="flex justify-between items-center mb-4">
+				<h2 class="text-xl font-bold">${regionName}</h2>
+				<button class="btn btn-sm btn-neutral" onclick="closeRegion()">Back to Map</button>
+			</div>
+		`);
+
+		for (const i in missions) {
+			if (missions[i].regionId !== activeRegion) continue;
+
+			const CONTENT = `
+				<div class="card bg-base-200 shadow-xl mb-2" id="mission-${i}">
+					<div class="card-body p-4">
+						<h3 class="card-title text-base">${missions[i].name}</h3>
+						<div class="text-xs text-base-content/70">
+							Level <span id="mission-${i}-level">0</span>
+							<span class="float-right">Next x2: <span id="mission-${i}-next" class="text-warning">25</span></span>
+						</div>
+						<div class="flex justify-between mt-2">
+							<div class="badge badge-neutral" id="mission-${i}-production">R0/s</div>
+							<div class="badge badge-neutral" id="mission-${i}-value">Cost: R0</div>
+						</div>
+						<div class="card-actions justify-center mt-4 flex-col gap-2">
+							<div class="join w-full">
+								<button id="mission-${i}-btnB1" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 1);">+1</button>
+								<button id="mission-${i}-btnB10" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 10);">+10</button>
+								<button id="mission-${i}-btnB100" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 100);">+100</button>
+							</div>
+							<div class="join w-full">
+								<button id="mission-${i}-btnS1" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 1);">-1</button>
+								<button id="mission-${i}-btnS10" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 10);">-10</button>
+								<button id="mission-${i}-btnS100" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 100);">-100</button>
+							</div>
+						</div>
+					</div>
+				</div>`;
+			document.getElementById('missions').insertAdjacentHTML('beforeend', CONTENT);
+			if (p.rank >= missions[i].level) document.getElementById("mission-" + i).style.display = ''; else document.getElementById("mission-" + i).style.display = 'none';
+		}
+		document.getElementById("tab2").insertAdjacentHTML('beforeend', `<div id='NextMissionUnlock' class='alert alert-warning mt-4'>Next mission unlocks at rank 0</div>`);
+		if (getLatestUnlockedMissionId("latest") === "allUnlocked") document.getElementById("NextMissionUnlock").style.display = 'none'; else document.getElementById("NextMissionUnlock").style.display = '';
 	}
-	document.getElementById("tab2").insertAdjacentHTML('beforeend', `<div id='NextMissionUnlock' class='alert alert-warning mt-4'>Next mission unlocks at rank 0</div>`);
-	if (getLatestUnlockedMissionId("latest") === "allUnlocked") document.getElementById("NextMissionUnlock").style.display = 'none'; else document.getElementById("NextMissionUnlock").style.display = '';
 }
 
 function UpdateMissions(onlyId) {
+	if (activeRegion === null) return;
 	if (onlyId !== undefined) { const i = onlyId; UpdateMissionsDiv(i); return; }
 	for (const i in missions) {
-		UpdateMissionsDiv(i);
+		if (missions[i].regionId === activeRegion) {
+			UpdateMissionsDiv(i);
+		}
 	}
 }
 
 function UpdateMissionsDiv(i) {
-	document.getElementById("mission-" + i + "-level").innerHTML = p.missions[i];
+	const el = document.getElementById("mission-" + i + "-level");
+	if (!el) return;
+
+	el.innerHTML = p.missions[i];
 	document.getElementById("mission-" + i + "-next").innerHTML = getNextMilestone(p.missions[i]);
 	document.getElementById("mission-" + i + "-value").innerHTML = "Cost: R " + fix(GetMissionPrice(i, 1), 1);
 	
@@ -172,6 +246,34 @@ function UpdateMissionsDiv(i) {
 		document.getElementById("NextMissionUnlock").style.display = '';
 	}
 	if (p.rank >= missions[i].level) document.getElementById("mission-" + i).style.display = '';
+}
+
+function UpdateMap() {
+	if (activeRegion !== null) return;
+	for (const id in regions) {
+		const unlocked = isRegionUnlocked(id);
+		const progress = getRegionUnlockProgress(id);
+		
+		const progEl = document.getElementById(`region-progress-${id}`);
+		if (progEl) progEl.value = progress;
+
+		const card = document.getElementById(`region-card-${id}`);
+		if (card && unlocked && card.classList.contains('opacity-70')) {
+			MissionList();
+			return;
+		}
+	}
+}
+
+function UpdateBackground() {
+	const region = getHighestUnlockedRegion();
+	if (region && region.id !== lastBackgroundId) {
+		lastBackgroundId = region.id;
+		document.body.style.backgroundImage = `url('${region.img}')`;
+		document.body.style.backgroundSize = "cover";
+		document.body.style.backgroundPosition = "center";
+		document.body.style.backgroundAttachment = "fixed";
+	}
 }
 
 //WEAPONS TABLE
@@ -284,6 +386,7 @@ function ClickEvents() {
 			hideTabs();
 			document.getElementById("tab" + id).style.display = '';
 			document.getElementById("t" + id).classList.add("btn-active", "text-warning");
+			if (id == 2) MissionList();
 			UpdateUI();
 			UpdateTabs();
 		}
@@ -314,6 +417,7 @@ function ClickEvents() {
 				target.classList.remove("text-neutral-content");
 				target.classList.add("active", "text-success", "bg-base-300");
 				document.getElementById("t" + id).classList.add("btn-active", "text-warning");
+				if (id == 2) MissionList();
 				UpdateUI();
 				UpdateTabs();
 			}
