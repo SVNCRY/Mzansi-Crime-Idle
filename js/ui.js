@@ -75,6 +75,7 @@ function UpdateTabs() {
 
 function UpdateTexts() {
 	//MENU
+	$("#game-menu").removeClass("bottom").addClass("top");
 	$("#t0").html("<i class='sidebar icon'></i>" + texts.menu[0]);
 	$("#t1").html("<i class='fa-thin fa-crosshairs-simple icon'></i>" + texts.menu[1]);
 	$("#t2").html("<i class='dollar sign icon'></i>" + texts.menu[2]);
