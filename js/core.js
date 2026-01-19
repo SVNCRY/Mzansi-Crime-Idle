@@ -1,4 +1,4 @@
-const version = "v1.0-SA";
+const version = "v1.1-Beta";
 var notify_time = 0;
 const DEFAULT = {
 	//DEFAULT VARS
@@ -120,11 +120,29 @@ function idleFiveLoop() {
 	UpdateTabs();
 }
 
+const MILESTONES = [25, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+
+function getMilestoneBonus(amountOwned) {
+    let bonus = 1;
+    MILESTONES.forEach(milestone => {
+        if (amountOwned >= milestone) {
+            bonus *= 2; // Double the bonus at each milestone
+        }
+    });
+
+    return bonus;
+}
+
+function getNextMilestone(amountOwned) {
+    return MILESTONES.find(m => m > amountOwned) || "Max";
+}
+
 function getCashPS() {
 	let CASHPERSECOND = 0;
 	for (var m in missions) {
 		if (p.missions[m] > 0) {
-			CASHPERSECOND += (missions[m].value * p.missions[m]) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1));
+			let milestoneBonus = getMilestoneBonus(p.missions[m]);
+			CASHPERSECOND += (missions[m].value * p.missions[m] * milestoneBonus) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1));
 		}
 	}
 	return CASHPERSECOND;
@@ -396,7 +414,7 @@ function GetMissionPrice(id, qty) {
 
 function GetMissionPriceModifier(amount) {
 	Mapping = {
-		1:       1.10,
+		1:       1.07,
 		50:      1.05,
 		100:     1.025,
 		500:     1.015,

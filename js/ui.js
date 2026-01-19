@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿function UpdateUI() {
+﻿﻿﻿﻿﻿﻿﻿function UpdateUI() {
 	let ClicCashText = fix(p.Weapon.Power * (GetWeaponMult(p.Weapon.Id) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), "full");
 	let WeaponsNBR = 0;
 	let AllWeaponsNBR = -1;
@@ -115,7 +115,10 @@ function MissionList() {
 			<div class="card inverted" id="mission-${i}" style="background: #1b1c1d;">
 				<div class="content">
 					<div class="header" style="color: #fff;">${missions[i].name}</div>
-					<div class="meta" style="color: #aaa;">Level <span id="mission-${i}-level">0</span></div>
+					<div class="meta" style="color: #aaa;">
+						Level <span id="mission-${i}-level">0</span>
+						<span style="float: right; font-size: 0.8em; color: #e0e1e2;">Next x2: <span id="mission-${i}-next" class="jaune">25</span></span>
+					</div>
 					<div class="description">
 						<div class="ui label black" id="mission-${i}-production">R0/s</div>
 						<div class="ui label black" id="mission-${i}-value">Cost: R0</div>
@@ -151,6 +154,7 @@ function UpdateMissions(onlyId) {
 function UpdateMissionsDiv(i) {
 	// $("#mission-" + i).attr("class", p.missions[i] < 1 ? '' : 'item-active'); // Card style handles this differently
 	$("#mission-" + i + "-level").html(p.missions[i]);
+	$("#mission-" + i + "-next").html(getNextMilestone(p.missions[i]));
 	$("#mission-" + i + "-value").html("Cost: R " + fix(GetMissionPrice(i, 1), 1));
 	
 	let prodVal = (missions[i].value * p.missions[i]) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1));

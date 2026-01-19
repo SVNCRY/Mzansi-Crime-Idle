@@ -9,18 +9,18 @@ This document outlines the planned update schedule, transitioning the game from 
 ### v1.1: The Economy Update
 **Goal:** Solidify the base game loop and fix pacing issues before expanding the world.
 - **Economy Rebalance:**
-  - [ ] Implement milestone multipliers (e.g., x2 speed/profit at 25, 50, 100 owned).
-  - [ ] Update `js/core.js` to calculate and apply these multipliers.
-  - [ ] Add visual indicators in the UI for the next milestone.
+  - [x] Implement milestone multipliers (e.g., x2 speed/profit at 25, 50, 100 owned).
+  - [x] Update `js/core.js` to calculate and apply these multipliers.
+  - [x] Add visual indicators in the UI for the next milestone.
 - **Cost Scaling:**
-  - [ ] Analyze `BigNumber` growth curves.
-  - [ ] Adjust `cost_scale` in `js/data.js` to smooth the Mid-game to Late-game transition.
+  - [x] Analyze `BigNumber` growth curves.
+  - [x] Adjust `cost_scale` in `js/data.js` to smooth the Mid-game to Late-game transition.
 - **UI Polish:**
   - [ ] Refactor CSS for better mobile responsiveness.
   - [x] **Framework Decision:** Selected **Tailwind CSS**.
   - [x] **Component Library:** Selected **DaisyUI**.
   - [x] **Build Setup:** Configured Tailwind + DaisyUI build pipeline.
-  - [ ] **Implementation:** Convert Mission/Weapon lists from Tables to Cards (Option 1).
+  - [x] **Implementation:** Convert Mission/Weapon lists from Tables to Cards (Option 1).
   - [ ] Prepare the interface (tabs/layout) for the upcoming Map tab.
 
 ### v1.2: The Provincial Tour (World Expansion Part 1)
