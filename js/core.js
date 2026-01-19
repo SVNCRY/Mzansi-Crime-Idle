@@ -63,7 +63,6 @@ $(document).ready(function () {
 	WeaponList();
 	idleFiveLoop();
 	showTutorial(p.tutorial);
-	$('.ui.sidebar').sidebar('hide');
 });
 
 function idleFiveLoop() {
@@ -216,7 +215,7 @@ function getRank(rankNBR) {
 	if (rankNBR >= 1050) Class = "Gold"; // x50 each
 	if (rankNBR >= 2100) Class = "Platinum"; // x100 each
 	if (rankNBR >= 27000) Class = "Heavenly"; // x1000 each
-	return "<span class='ui content " + Class + "'>" + fix(rankNBR, 3) + "</span>";
+	return "<span class='font-bold " + Class + "'>" + fix(rankNBR, 3) + "</span>";
 }
 
 function buyG(id) {
@@ -615,7 +614,7 @@ function GenStarLabel(Stars) {
 	if (Stars == 8) Class = "Divine";
 	if (Stars == 9) Class = "Universal";
 	if (Stars == 10) Class = "Dimensional";
-	if (Stars != 0) return "<div class='ui horizontal label " + Class + "'> " + Stars + " <i class='fitted star icon'></i></div>";
+	if (Stars != 0) return "<div class='badge badge-outline " + Class + "'> " + Stars + " <i class='fitted star icon'></i></div>";
 	else return "";
 }
 

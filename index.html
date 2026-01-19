@@ -5,9 +5,6 @@
     <meta charset="UTF-8" name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
     <link rel="shortcut icon" type="image/x-icon" href="images/fav.ico" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/components/dropdown.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/components/sidebar.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Saira:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -24,245 +21,181 @@
     </script>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <style>
-        /* Mobile Bottom Nav */
-        #mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000; border-radius: 0; margin: 0; }
-        @media only screen and (max-width: 767px) {
-            #mobile-bottom-nav { display: flex; }
-            #game-menu { display: none !important; }
-            .ui.stackable.grid { margin-bottom: 60px !important; }
-            .ui.container.main-content { padding-bottom: 70px; }
-        }
-        /* Card adjustments */
-        .ui.cards > .card { width: 100%; background: #1b1c1d !important; box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5; }
-        .ui.cards > .card > .content { color: rgba(255,255,255,.9); }
-        .ui.cards > .card > .content > .header { color: rgba(255,255,255,.9); }
-        .ui.cards > .card > .content > .description { color: rgba(255,255,255,.7); }
+        /* Custom Scrollbar for Webkit */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
 
-<body id="body" class="noselect">
+<body id="body" class="select-none bg-base-100 text-base-content overflow-x-hidden">
     <!--SIDE BAR-->
-    <div id="sidebar" class="ui left demo vertical visible inverted sidebar labeled icon menu">
-        <a class="item" id="menu4" data-id="4">
-            <i class="info icon"></i>Guide</a>
-        <a class="item" id="menu5" data-id="5">
-            <i class="save icon"></i>Save</a>
-        <a class="item" target="_blank" href="https://discord.gg/SBuYeHh">
-            <i class="discord icon"></i>Discord</a>
-        <a class="item" target="_blank" href="https://github.com/GoldenLys/IdleFive">
-            <i class="github icon"></i>Github</a>
-        <a class="item" target="_blank" href="https://www.paypal.me/Aizen45/5">
-            <i class="paypal icon"></i>Donate</a>
+    <div id="sidebar" class="hidden md:flex flex-col fixed left-0 top-0 h-full w-24 bg-base-300 z-50 p-2 gap-2 items-center pt-20">
+        <a class="btn btn-ghost btn-circle w-16 h-16 flex flex-col gap-1" id="menu4" data-id="4">
+            <i class="fa-solid fa-info text-xl"></i><span class="text-xs">Guide</span></a>
+        <a class="btn btn-ghost btn-circle w-16 h-16 flex flex-col gap-1" id="menu5" data-id="5">
+            <i class="fa-solid fa-floppy-disk text-xl"></i><span class="text-xs">Save</span></a>
+        <a class="btn btn-ghost btn-circle w-16 h-16 flex flex-col gap-1" target="_blank" href="https://discord.gg/SBuYeHh">
+            <i class="fa-brands fa-discord text-xl"></i><span class="text-xs">Discord</span></a>
+        <a class="btn btn-ghost btn-circle w-16 h-16 flex flex-col gap-1" target="_blank" href="https://github.com/GoldenLys/IdleFive">
+            <i class="fa-brands fa-github text-xl"></i><span class="text-xs">Github</span></a>
+        <a class="btn btn-ghost btn-circle w-16 h-16 flex flex-col gap-1" target="_blank" href="https://www.paypal.me/Aizen45/5">
+            <i class="fa-brands fa-paypal text-xl"></i><span class="text-xs">Donate</span></a>
     </div>
-    <div class="pusher" fetchpriority="high">
+    
+    <div class="md:pl-24 min-h-screen flex flex-col" fetchpriority="high">
         <!--TOP MENU-->
-        <div id="top-menu" class="ui green secondary inverted menu">
-            <div class="item">
-                <div class="ui logo shape">
-                    <div class="sides">
-                        <div class="active ui side">
-                            <i class="ui logo fa-duotone fa-solid fa-circle-dollar" style=></i>
-                        </div>
-                    </div>
-                </div>
+        <div id="top-menu" class="navbar bg-base-200 shadow-lg sticky top-0 z-40">
+            <div class="flex-1">
+                <a class="btn btn-ghost text-2xl text-success"><i class="fa-duotone fa-solid fa-circle-dollar"></i></a>
             </div>
-            <div class="ui inverted secondary menu" id="game-menu">
-                <button id="sidebar" id="t0" class="ui button item">
-                    <i class="sidebar icon"></i>Menu</button>
-                <a class="ui button item" id="t1" data-id="1">
+            <div class="flex-none hidden md:flex gap-2" id="game-menu">
+                <button id="t0" class="btn btn-sm btn-ghost">
+                    <i class="fa-solid fa-bars"></i> Menu</button>
+                <a class="btn btn-sm btn-ghost" id="t1" data-id="1">
                     <i class="fa-thin fa-crosshairs-simple icon"></i>Weapons</a>
-                <a class="ui button item green dollar basic" id="t2" data-id="2">
+                <a class="btn btn-sm btn-outline btn-success" id="t2" data-id="2">
                     <i class="dollar sign icon"></i>Missions</a>
-                <a class="ui button item" id="t3" data-id="3">
+                <a class="btn btn-sm btn-ghost" id="t3" data-id="3">
                     <i class="user icon"></i>Character</a>
-                <a class="ui button item" id="t4" data-id="4">
+                <a class="btn btn-sm btn-ghost" id="t4" data-id="4">
                     <i class="chart bar icon"></i>Stats</a>
-                <a class="ui button item" id="t5" data-id="5">
+                <a class="btn btn-sm btn-ghost" id="t5" data-id="5">
                     <i class="fa-sharp fa-solid fa-award icon"></i>Achievements</a>
             </div>
         </div>
         <!-- MOBILE BOTTOM NAV -->
-        <div id="mobile-bottom-nav" class="ui inverted labeled icon five item menu">
-            <a class="item" data-id="1"><i class="fa-thin fa-crosshairs-simple icon"></i>Weapons</a>
-            <a class="item active green" data-id="2"><i class="dollar sign icon"></i>Missions</a>
-            <a class="item" data-id="3"><i class="user icon"></i>Char</a>
-            <a class="item" data-id="4"><i class="chart bar icon"></i>Stats</a>
-            <a class="item" data-id="0"><i class="bars icon"></i>Menu</a>
+        <div id="mobile-bottom-nav" class="btm-nav md:hidden z-50 bg-base-200 border-t border-base-300">
+            <button class="text-neutral-content" data-id="1"><i class="fa-thin fa-crosshairs-simple text-xl"></i><span class="btm-nav-label text-xs">Weapons</span></button>
+            <button class="active text-success bg-base-300" data-id="2"><i class="fa-solid fa-dollar-sign text-xl"></i><span class="btm-nav-label text-xs">Missions</span></button>
+            <button class="text-neutral-content" data-id="3"><i class="fa-solid fa-user text-xl"></i><span class="btm-nav-label text-xs">Char</span></button>
+            <button class="text-neutral-content" data-id="4"><i class="fa-solid fa-chart-bar text-xl"></i><span class="btm-nav-label text-xs">Stats</span></button>
+            <button class="text-neutral-content" data-id="0"><i class="fa-solid fa-bars text-xl"></i><span class="btm-nav-label text-xs">Menu</span></button>
         </div>
 
-        <div class="topmenu-space"></div>
         <!--COLUMNS-->
-        <div class="ui two column stackable very relaxed grid" style="height: 94%; position: relative;">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 pb-20 md:pb-4">
             <!--LEFT COLUMN-->
-            <div class="column" id="colonne-m">
+            <div class="lg:col-span-1 flex flex-col gap-4" id="colonne-m">
                 <!--CURRENT WEAPON-->
-                <div class="ui sticky grid center aligned inverted internally celled">
-                    <div class="row">
-                        <div class="sixteen wide column">
-                            <h2 class="ui bold header dollar" id="status_cash"></h2>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="sixteen wide column">
-                            <div id="imagecontainer">
-                                <div id="imagecash"></div>
-                            </div>
+                <div class="card bg-base-200 shadow-xl">
+                    <div class="card-body items-center text-center p-4">
+                        <h2 class="text-4xl font-bold text-success" id="status_cash"></h2>
+                        <div id="imagecontainer" class="mt-2">
+                            <div id="imagecash"></div>
                         </div>
                     </div>
                 </div>
 
                 <!--GAME INFOS-->
-                <div class="ui black message">
-                    <div id="status" class="ui sticky grid center aligned inverted internally celled">
-                        <div class="row">
-                            <div class="four wide white column">
-                                Weapon
-                            </div>
-                            <div class="twelve wide column">
-                                <h3 class="ui middle aligned bold content" id="status_weapon"></h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="four wide red column">
-                                Damage
-                            </div>
-                            <div class="twelve wide column">
-                                <h3 class="ui middle aligned bold content" id="status_damage"></h3>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="four wide blue column">
-                                Rank
-                            </div>
-                            <div class="twelve wide column">
-                                <h3 class="ui middle aligned content" id="status_level"></h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="four wide yellow column">
-                                Chips
-                            </div>
-                            <div class="twelve wide column">
-                                <h3 class="ui middle aligned content" id="status_points"></h3>
-                            </div>
-                        </div>
+                <div class="card bg-base-200 shadow-xl p-4">
+                    <div id="status" class="grid grid-cols-4 gap-2 text-sm mb-4">
+                        <div class="font-bold text-neutral-content">Weapon</div>
+                        <div class="col-span-3 text-right font-bold" id="status_weapon"></div>
+                        
+                        <div class="font-bold text-error">Damage</div>
+                        <div class="col-span-3 text-right font-bold" id="status_damage"></div>
+                        
+                        <div class="font-bold text-info">Rank</div>
+                        <div class="col-span-3 text-right" id="status_level"></div>
+                        
+                        <div class="font-bold text-warning">Chips</div>
+                        <div class="col-span-3 text-right" id="status_points"></div>
                     </div>
 
-                    <h3 class="ui horizontal inverted divider bold big section">Current Objective</h3>
+                    <div class="divider font-bold text-lg">Current Objective</div>
 
-                    <div class="ui sticky grid center aligned inverted internally celled">
-                        <div class="row">
-                            <div class="sixteen wide column">
-                                <span id="objective"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="sixteen wide column">
-                                <h3 class="ui middle aligned content jaune" id="quest_rewards"></h3>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="sixteen wide column">
-                                <button id="ChangeObjective" class="fluid ui inverted green dollar basic button">New objective for
-                                    <span class="jaune"><i class='fa-light fa-coin'></i> 0.5</span>
-                                </button>
-                            </div>
-                        </div>
+                    <div class="flex flex-col gap-2 text-center">
+                        <span id="objective" class="text-lg"></span>
+                        <h3 class="text-warning font-bold" id="quest_rewards"></h3>
+                        <button id="ChangeObjective" class="btn btn-outline btn-success w-full mt-2">
+                            New objective for <span class="text-warning ml-1"><i class='fa-light fa-coin'></i> 0.5</span>
+                        </button>
                     </div>
-                    <div class="ui section divider"></div>
-                    <div class="ui sticky grid center aligned">
-                        <div class="row">
-                            <div id="messages"></div>
-                        </div>
+                    
+                    <div class="divider"></div>
+                    <div class="text-center">
+                        <div id="messages"></div>
                     </div>
 
                 </div>
             </div>
             <!--RIGHT COLUMN-->
-            <div class="column" id="colonne-d">
+            <div class="lg:col-span-2" id="colonne-d">
                 <!--WEAPONS-->
                 <div id="tab1" style="display: none; width: 100%;">
 
-                    <div name="weap-type" class="ui inverted secondary dollar centered fluid wrapping menu" id="weap-select">
-                        <div id="W1" class="item active" data-id="1"></div>
-                        <div id="W2" class="item" data-id="2"></div>
-                        <div id="W3" class="item" data-id="3"></div>
-                        <div id="W4" class="item" data-id="4"></div>
-                        <div id="W5" class="item" data-id="5"></div>
-                        <div id="W6" class="item" data-id="6"></div>
-                        <div id="W7" class="item" data-id="7"></div>
-                        <div id="W8" class="item" data-id="8"></div>
+                    <div name="weap-type" class="tabs tabs-boxed justify-center mb-4 bg-base-200" id="weap-select">
+                        <a id="W1" class="tab tab-active" data-id="1"></a>
+                        <a id="W2" class="tab" data-id="2"></a>
+                        <a id="W3" class="tab" data-id="3"></a>
+                        <a id="W4" class="tab" data-id="4"></a>
+                        <a id="W5" class="tab" data-id="5"></a>
+                        <a id="W6" class="tab" data-id="6"></a>
+                        <a id="W7" class="tab" data-id="7"></a>
+                        <a id="W8" class="tab" data-id="8"></a>
                     </div>
 
-                    <div id="Wtab1" class="ui stackable cards"></div>
-                    <div id="Wtab2" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab3" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab4" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab5" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab6" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab7" class="ui stackable cards" style="display: none;"></div>
-                    <div id="Wtab8" class="ui stackable cards" style="display: none;"></div>
+                    <div id="Wtab1" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                    <div id="Wtab2" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab3" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab4" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab5" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab6" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab7" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
+                    <div id="Wtab8" class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="display: none;"></div>
                 </div>
 
                 <!--MISSIONS-->
                 <div id="tab2" style="display: block; width: 100%;">
-                    <div id="missions" class="ui stackable cards"></div>
+                    <div id="missions" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </div>
 
                 <!--VEHICLES-->
                 <div id="tab3" style="display: none; width: 100%;">
 
-                    <div class="ui black message">
-
-                        <div class="content">
+                    <div class="card bg-base-200 shadow-xl p-4 mb-4">
+                        <div class="flex flex-col gap-2">
                             <div id="character-number"></div>
                             <div id="prestigecount"></div>
-                        </div>
-
-                        <div class="content">
                             <div id="character-text1"></div>
                             <div id="prestigepricecount"></div>
                             <div id="character-text2"></div>
                             <div class="tc-dollar" id="prestigepricecount2"></div>
                             <div id="character-text3"></div>
-                        </div>
-
-                        <div class="content">
                             <div id="character-text4"></div>
-                        </div>
-
-                        <div class="content">
                             <div id="character-text5"></div>
                         </div>
                     </div>
-                    <div class="ui black message">
-                        <div id="btnReasign" onClick="ReasignPoints();" class="ui blue button">Reasign Points </div>
-                        <div id="btnPrestige" onClick="AddPrestige();" class="ui green dollar inverted button">
+                    <div class="card bg-base-200 shadow-xl p-4 mb-4">
+                        <div class="flex gap-4 justify-center">
+                            <div id="btnReasign" onClick="ReasignPoints();" class="btn btn-info">Reasign Points </div>
+                            <div id="btnPrestige" onClick="AddPrestige();" class="btn btn-success btn-outline">
                             <i class="checkmark icon"></i>Change Character
+                            </div>
                         </div>
                     </div>
 
-                    <table id="Vtab" class="ui inverted table"></table>
+                    <table id="Vtab" class="table w-full"></table>
                 </div>
 
                 <!--STATS-->
                 <div id="tab4" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <div class="ui two column centered grid">
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">GENERAL</h4>
-                                <div class="ui large full-width invisible segment">
+                    <div class="card bg-base-200 shadow-xl p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <div class="divider font-bold text-sm">GENERAL</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="ObjectivesCompleted"></div>
                                     <div id="totalclicks"></div>
                                     <div id="highestrank"></div>
                                     <div id="totalsuccess"></div>
                                 </div>
                             </div>
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">CHARACTER</h4>
-                                <div class="ui large full-width invisible segment">
+                            <div>
+                                <div class="divider font-bold text-sm">CHARACTER</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="spcount"></div>
                                     <div id="pointsspent"></div>
                                     <div id="boughtvehicles1"></div>
@@ -270,9 +203,9 @@
                                     <div id="boughtvehicles3"></div>
                                 </div>
                             </div>
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">WEAPONS</h4>
-                                <div class="ui large full-width invisible segment">
+                            <div>
+                                <div class="divider font-bold text-sm">WEAPONS</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="lowestweaponrank"></div>
                                     <div id="highestweaponrank"></div>
                                     <div id="weapons-bought"></div>
@@ -280,9 +213,9 @@
                                     <div id="totalweaponrerolled"></div>
                                 </div>
                             </div>
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">CASH</h4>
-                                <div class="ui large full-width invisible segment">
+                            <div>
+                                <div class="divider font-bold text-sm">CASH</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="cashcount"></div>
                                     <div id="cashpscount"></div>
                                     <div id="addcashcount"></div>
@@ -292,18 +225,18 @@
                                     <div id="totalcash"></div>
                                 </div>
                             </div>
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">MULTIPLIERS</h4>
-                                <div class="ui large full-width invisible segment">
+                            <div>
+                                <div class="divider font-bold text-sm">MULTIPLIERS</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="cashmult"></div>
                                     <div id="damagemult"></div>
                                     <div id="stealthmult"></div>
                                     <div id="prestigemult"></div>
                                 </div>
                             </div>
-                            <div class="column">
-                                <h4 class="ui horizontal divider bold small header">INFOS</h4>
-                                <div class="ui large full-width invisible segment">
+                            <div>
+                                <div class="divider font-bold text-sm">INFOS</div>
+                                <div class="flex flex-col gap-1">
                                     <div id="time"></div>
                                     <div id="version"></div>
                                 </div>
@@ -314,12 +247,12 @@
 
                 <!--ACHIEVEMENTS-->
                 <div id="tab5" style="display: none; width: 100%;">
-                    <div class="ui black message">
-                        <div id="successtype" class="ui four inverted secondary dollar pointing item menu">
-                            <button id="succcess-btn-0" data-id="0" class="active item">Player</button>
-                            <button id="succcess-btn-1" data-id="1" class="item">Cash</button>
-                            <button id="succcess-btn-2" data-id="2" class="item">Missions</button>
-                            <button id="succcess-btn-3" data-id="3" class="item">Characters</button>
+                    <div class="card bg-base-200 shadow-xl p-4">
+                        <div id="successtype" class="tabs tabs-boxed justify-center mb-4 bg-base-300">
+                            <button id="succcess-btn-0" data-id="0" class="tab tab-active">Player</button>
+                            <button id="succcess-btn-1" data-id="1" class="tab">Cash</button>
+                            <button id="succcess-btn-2" data-id="2" class="tab">Missions</button>
+                            <button id="succcess-btn-3" data-id="3" class="tab">Characters</button>
                         </div>
 
                         <div id="Stab0" style="display: block;"></div>
@@ -330,89 +263,75 @@
                 </div>
             </div>
         </div>
-        <div id="announce" class="big ui black label alert" style="display: none;">
+        <div id="announce" class="alert alert-info fixed bottom-4 right-4 w-auto shadow-lg z-50" style="display: none;">
             <div id="announce-text"></div>
         </div>
     </div>
     <!--MENUS-->
-    <div class="ui basic modal" id="modal-1">
-        <div class="ui icon header">
-            <i class="icon fas fa-comment-alt-exclamation"></i>
-            <span id="message-title" class="title">Message</span>
-        </div>
-        <div class="centrer content">
-            <div class="ui black message">
-                <div class="content">
-                    <p id="message-text">
-                    </p>
-                </div>
-            </div>
-            <div class="actions">
-                <div id="closeMSG" class="ui cu button">
-                    <i class="remove icon"></i>Close
-                </div>
+    <dialog id="modal-1" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg flex items-center gap-2">
+                <i class="icon fas fa-comment-alt-exclamation"></i>
+                <span id="message-title">Message</span>
+            </h3>
+            <p class="py-4" id="message-text"></p>
+            <div class="modal-action">
+                <form method="dialog">
+                    <button id="closeMSG" class="btn">Close</button>
+                </form>
             </div>
         </div>
-    </div>
-    <!--UNUSED-->
-    <div class="ui basic modal" id="modal-2"></div>
-    <!--UNUSED-->
-    <div class="ui basic modal" id="modal-3"></div>
-    <!--TUTORIAL-->
-    <div class="ui basic modal" id="modal-4">
+    </dialog>
 
-        <div class="ui icon header">
-            <i class="info icon"></i>
-            <font id="tutorial-title" class="title blanc"></font>
-        </div>
-        <div class="centrer content">
-            <p id="tutorial-text"></p>
-        </div>
-        <div class="actions">
-            <div class="large three ui buttons">
-                <button onClick="PrevTuto();" id="tuto-prev" class="ui inverted basic button">Previous</button>
-                <button onClick="NextTuto();" id="tuto-next" class="ui green dollar inverted basic button">Next</button>
-                <div onclick="closeTutorial();" class="ui red basic inverted button">
-                    <i class="remove icon"></i>Close
-                </div>
+    <!--UNUSED-->
+    <dialog id="modal-2" class="modal"><div class="modal-box"></div></dialog>
+    <!--UNUSED-->
+    <dialog id="modal-3" class="modal"><div class="modal-box"></div></dialog>
+
+    <!--TUTORIAL-->
+    <dialog id="modal-4" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg flex items-center gap-2">
+                <i class="info icon"></i>
+                <span id="tutorial-title"></span>
+            </h3>
+            <p class="py-4" id="tutorial-text"></p>
+            <div class="modal-action justify-between">
+                <button onClick="PrevTuto();" id="tuto-prev" class="btn btn-outline">Previous</button>
+                <button onClick="NextTuto();" id="tuto-next" class="btn btn-success btn-outline">Next</button>
+                <button onclick="closeTutorial();" class="btn btn-error btn-outline">Close</button>
             </div>
         </div>
-    </div>
+    </dialog>
+
     <!--SAVE-->
-    <div class="ui basic modal" id="modal-5">
-        <div class="ui icon header">
-            <i class="save icon"></i>
-            <font id="savemenu" class="title blanc"></font>
-        </div>
-        <div class="centrer content">
-            <p>Here you can export your save to another naviator or computer.</p>
-            <p>You can also reset your save to to start a new game.</p>
-            <div id="exportBody"></div>
-            <p id='debugtext' class='copytext'></p>
-        </div>
-        <div class="actions">
-            <div class="three ui buttons">
-                <button onClick="exportSave();" id="btnExport" class="ui green dollar inverted button">Export</button>
-                <button onClick="importSave();" id="btnExport" class="ui green dollar inverted button">Import</button>
-                <button onClick="confirmReset();" id="Recommencer" class="ui red button">Reset</button>
+    <dialog id="modal-5" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg flex items-center gap-2">
+                <i class="save icon"></i>
+                <span id="savemenu"></span>
+            </h3>
+            <div class="py-4">
+                <p>Here you can export your save to another naviator or computer.</p>
+                <p>You can also reset your save to to start a new game.</p>
+                <div id="exportBody" class="my-2"></div>
+                <p id='debugtext' class='text-xs text-warning'></p>
             </div>
-            <br />
-            <br />
-            <div class="fluid ui buttons">
-                <div onclick="hideMenus();" class="ui red basic inverted button">
-                    <i class="remove icon"></i>Close
+            <div class="modal-action flex-col gap-2">
+                <div class="flex gap-2 justify-end">
+                    <button onClick="exportSave();" id="btnExport" class="btn btn-success btn-outline">Export</button>
+                    <button onClick="importSave();" id="btnExport" class="btn btn-success btn-outline">Import</button>
+                    <button onClick="confirmReset();" id="Recommencer" class="btn btn-error">Reset</button>
                 </div>
+                <button onclick="hideMenus();" class="btn btn-ghost w-full">Close</button>
             </div>
         </div>
-    </div>
+    </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/semantic.min.js"></script>
     <script type="text/javascript" src="DATA/lodash.min.js"></script>
     <script type="text/javascript" src="DATA/bignumber.js"></script>
     <script type="text/javascript" src="DATA/numeral.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/components/dropdown.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.4/dist/components/sidebar.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
     <script type="text/javascript" src="js/core.js"></script>

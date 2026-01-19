@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿function UpdateUI() {
+﻿﻿﻿﻿﻿﻿﻿﻿﻿function UpdateUI() {
 	let ClicCashText = fix(p.Weapon.Power * (GetWeaponMult(p.Weapon.Id) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), "full");
 	let WeaponsNBR = 0;
 	let AllWeaponsNBR = -1;
@@ -11,9 +11,9 @@
 	$("#status_cash").html("R " + fix(p.cash, "full") + "<div class='sub header'>+ " + fix(getCashPS(), "full") + " per second</div>");
 	$("#status_level").html(getRank(p.rank));
 	$("#status_weapon").html(weapons[p.Weapon.Id].name + " " + GenStarLabel(p.Stars[p.Weapon.Id]));
-	$("#status_weapon").attr("class", 'ui middle aligned bold content ' + p.Weapon.Class);
-	$("#status_damage").attr("class", 'ui middle aligned bold content ' + p.Weapon.Class);
-	$("#status_damage").html("<i class='ui red fa-thin fa-crosshairs-simple'></i>" + ClicCashText);
+	$("#status_weapon").attr("class", 'col-span-3 font-bold flex items-center justify-end gap-2 ' + p.Weapon.Class);
+	$("#status_damage").attr("class", 'col-span-3 font-bold flex items-center justify-end gap-2 ' + p.Weapon.Class);
+	$("#status_damage").html("<i class='text-error fa-thin fa-crosshairs-simple'></i> " + ClicCashText);
 	$("#status_points").html("<span class='jaune'><i class='fa-light fa-coin'></i> " + fix(p.points, 2) + "</span>");
 	$("#messages").html(prestigeText);
 	//CHARACTER
@@ -59,12 +59,11 @@
 	$("#objective").html(GetQuestTitle());
 	$("#quest_rewards").html("<i class='fa-light fa-coin'></i> " + fix(p.quest.reward + p.quest.reward * (p.prestige.multipliers[2] * 0.1), "dynamic"));
 
-	if (p.points >= 0.5) $("#ChangeObjective").attr("class", "fluid ui inverted yellow button");
-	else $("#ChangeObjective").attr("class", "fluid ui inverted basic red button");
+	if (p.points >= 0.5) $("#ChangeObjective").attr("class", "btn btn-warning btn-outline w-full mt-2");
+	else $("#ChangeObjective").attr("class", "btn btn-error btn-outline w-full mt-2");
 
 	$("#successcount").html("<font class='SuccessText'>" + SuccessCount() + "</font>/" + success.length + " " + texts.success[0]);
 	SuccessList();
-	redrawTables();
 }
 
 function UpdateTabs() {
@@ -75,12 +74,11 @@ function UpdateTabs() {
 
 function UpdateTexts() {
 	//MENU
-	$("#game-menu").removeClass("bottom").addClass("top");
-	$("#t0").html("<i class='sidebar icon'></i>" + texts.menu[0]);
-	$("#t1").html("<i class='fa-thin fa-crosshairs-simple icon'></i>" + texts.menu[1]);
-	$("#t2").html("<i class='dollar sign icon'></i>" + texts.menu[2]);
-	$("#t3").html("<i class='user icon'></i>" + texts.menu[3]);
-	$("#t4").html("<i class='chart bar icon'></i>" + texts.menu[4]);
+	$("#t0").html("<i class='fa-solid fa-bars'></i> " + texts.menu[0]);
+	$("#t1").html("<i class='fa-thin fa-crosshairs-simple'></i> " + texts.menu[1]);
+	$("#t2").html("<i class='fa-solid fa-dollar-sign'></i> " + texts.menu[2]);
+	$("#t3").html("<i class='fa-solid fa-user'></i> " + texts.menu[3]);
+	$("#t4").html("<i class='fa-solid fa-chart-bar'></i> " + texts.menu[4]);
 	//PRESTIGE TEXTS
 	$("#character-number").html(texts.character[1]);
 	$("#character-text1").html(texts.character[2]);
@@ -113,35 +111,35 @@ function MissionList() {
 	$('#missions').html("");
 	for (var i in missions) {
 		let CONTENT = $(`
-			<div class="card inverted" id="mission-${i}" style="background: #1b1c1d;">
-				<div class="content">
-					<div class="header" style="color: #fff;">${missions[i].name}</div>
-					<div class="meta" style="color: #aaa;">
+			<div class="card bg-base-200 shadow-xl" id="mission-${i}">
+				<div class="card-body p-4">
+					<h3 class="card-title text-base">${missions[i].name}</h3>
+					<div class="text-xs text-base-content/70">
 						Level <span id="mission-${i}-level">0</span>
-						<span style="float: right; font-size: 0.8em; color: #e0e1e2;">Next x2: <span id="mission-${i}-next" class="jaune">25</span></span>
+						<span class="float-right">Next x2: <span id="mission-${i}-next" class="text-warning">25</span></span>
 					</div>
-					<div class="description">
-						<div class="ui label black" id="mission-${i}-production">R0/s</div>
-						<div class="ui label black" id="mission-${i}-value">Cost: R0</div>
+					<div class="flex justify-between mt-2">
+						<div class="badge badge-neutral" id="mission-${i}-production">R0/s</div>
+						<div class="badge badge-neutral" id="mission-${i}-value">Cost: R0</div>
 					</div>
-				</div>
-				<div class="extra content">
-					<div class="ui three tiny buttons">
-						<button id="mission-${i}-btnB1" class="ui yellow button" onClick="BuyM(${i}, 1);">+1</button>
-						<button id="mission-${i}-btnB10" class="ui yellow button" onClick="BuyM(${i}, 10);">+10</button>
-						<button id="mission-${i}-btnB100" class="ui yellow button" onClick="BuyM(${i}, 100);">+100</button>
-					</div>
-					<div class="ui three tiny buttons" style="margin-top: 5px;">
-						<button id="mission-${i}-btnS1" class="ui red button" onClick="SellM(${i}, 1);">-1</button>
-						<button id="mission-${i}-btnS10" class="ui red button" onClick="SellM(${i}, 10);">-10</button>
-						<button id="mission-${i}-btnS100" class="ui red button" onClick="SellM(${i}, 100);">-100</button>
+					<div class="card-actions justify-center mt-4 flex-col gap-2">
+						<div class="join w-full">
+							<button id="mission-${i}-btnB1" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 1);">+1</button>
+							<button id="mission-${i}-btnB10" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 10);">+10</button>
+							<button id="mission-${i}-btnB100" class="btn btn-sm btn-warning join-item flex-1" onClick="BuyM(${i}, 100);">+100</button>
+						</div>
+						<div class="join w-full">
+							<button id="mission-${i}-btnS1" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 1);">-1</button>
+							<button id="mission-${i}-btnS10" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 10);">-10</button>
+							<button id="mission-${i}-btnS100" class="btn btn-sm btn-error btn-outline join-item flex-1" onClick="SellM(${i}, 100);">-100</button>
+						</div>
 					</div>
 				</div>
 			</div>`);
 		$('#missions').append(CONTENT);
 		if (p.rank >= missions[i].level) $("#mission-" + i).show(); else $("#mission-" + i).hide();
 	}
-	$("#tab2").append(`<div id='NextMissionUnlock' class='ui black message'>Next mission unlocks at rank 0</div>`);
+	$("#tab2").append(`<div id='NextMissionUnlock' class='alert alert-warning mt-4'>Next mission unlocks at rank 0</div>`);
 	if (getLatestUnlockedMissionId("latest") === "allUnlocked") $("#NextMissionUnlock").hide(); else $("#NextMissionUnlock").show();
 }
 
@@ -161,12 +159,12 @@ function UpdateMissionsDiv(i) {
 	let prodVal = (missions[i].value * p.missions[i]) * (p.prestige.bonus + (p.prestige.multipliers[0] * 0.1));
 	$("#mission-" + i + "-production").html("R " + fix(prodVal, 1) + "/s");
 
-	$("#mission-" + i + "-btnB1").toggleClass("disabled", GetMissionPrice(i, 1) > p.cash);
-	$("#mission-" + i + "-btnB10").toggleClass("disabled", GetMissionPrice(i, 10) > p.cash);
-	$("#mission-" + i + "-btnB100").toggleClass("disabled", GetMissionPrice(i, 100) > p.cash);
-	$("#mission-" + i + "-btnS1").toggleClass("disabled", p.missions[i] < 1);
-	$("#mission-" + i + "-btnS10").toggleClass("disabled", p.missions[i] < 10);
-	$("#mission-" + i + "-btnS100").toggleClass("disabled", p.missions[i] < 100);
+	$("#mission-" + i + "-btnB1").prop("disabled", GetMissionPrice(i, 1) > p.cash);
+	$("#mission-" + i + "-btnB10").prop("disabled", GetMissionPrice(i, 10) > p.cash);
+	$("#mission-" + i + "-btnB100").prop("disabled", GetMissionPrice(i, 100) > p.cash);
+	$("#mission-" + i + "-btnS1").prop("disabled", p.missions[i] < 1);
+	$("#mission-" + i + "-btnS10").prop("disabled", p.missions[i] < 10);
+	$("#mission-" + i + "-btnS100").prop("disabled", p.missions[i] < 100);
 	if (getLatestUnlockedMissionId("latest") === "allUnlocked") {
 		$("#NextMissionUnlock").hide();
 	}
@@ -185,17 +183,17 @@ function WeaponList() {
 
 	for (var i in weapons) {
 		let CONTENT = $(`
-            <div class="card inverted" id="weapon-${i}" style="background: #1b1c1d;">
-                <div class="image">
-                    <img src="${weapons[i].img}" style="background: #333;">
-                </div>
-                <div class="content">
-                    <div class="header" id="weapon-${i}-name" style="color: #fff;">${weapons[i].name}</div>
-                    <div class="meta" id="weapon-${i}-price" style="color: #aaa;">R ${weapons[i].price}</div>
-                </div>
-                <div class="ui bottom attached buttons">
-                    <div id="weapon-${i}-purchase" class="ui button" onClick="buyG(${i});">Purchase</div>
-                    <div id="weapon-${i}-equip" class="ui button" onClick="useW(${i});">Equip</div>
+            <div class="card bg-base-200 shadow-xl" id="weapon-${i}">
+                <figure class="px-4 pt-4">
+                    <img src="${weapons[i].img}" class="rounded-xl h-32 object-contain bg-base-300 w-full" style="background: #333;">
+                </figure>
+                <div class="card-body p-4 items-center text-center">
+                    <h3 class="card-title text-sm" id="weapon-${i}-name">${weapons[i].name}</h3>
+                    <p class="text-xs" id="weapon-${i}-price">R ${weapons[i].price}</p>
+                    <div class="card-actions w-full mt-2 flex-col gap-2">
+                        <button id="weapon-${i}-purchase" class="btn btn-sm btn-warning w-full" onClick="buyG(${i});">Purchase</button>
+                        <button id="weapon-${i}-equip" class="btn btn-sm btn-neutral w-full" onClick="useW(${i});">Equip</button>
+                    </div>
                 </div>
             </div>
         `);
@@ -214,16 +212,16 @@ function UpdateWeapons() {
 		$("#weapon-" + i + "-price").html(`R ${COST} <br><small style="color: #db2828;"><i class="fa-thin fa-crosshairs-simple"></i> ${powerVal}</small>`);
 		
 		let canBuy = p.cash >= (p.WeaponBought[i] < 1 ? weapons[i].price : weapons[i].price * 1.25);
-		let purchaseBtnClass = canBuy ? "ui yellow button" : "ui basic red button disabled";
-		if (p.Stars[i] === 10 && p.WeaponBought[i] > 0) purchaseBtnClass = "ui basic yellow button disabled";
+		let purchaseBtnClass = canBuy ? "btn btn-sm btn-warning w-full" : "btn btn-sm btn-error btn-outline w-full btn-disabled";
+		if (p.Stars[i] === 10 && p.WeaponBought[i] > 0) purchaseBtnClass = "btn btn-sm btn-warning btn-outline w-full btn-disabled";
 		let purchaseText = p.WeaponBought[i] > 0 ? "Roll" : "Buy";
 		if (p.Stars[i] === 10 && p.WeaponBought[i] > 0) purchaseText = "Maxed";
 		$("#weapon-" + i + "-purchase").attr("class", purchaseBtnClass).html(purchaseText);
 		
-		let equipBtnClass = p.WeaponBought[i] > 0 ? "ui button" : "ui button disabled";
+		let equipBtnClass = p.WeaponBought[i] > 0 ? "btn btn-sm btn-neutral w-full" : "btn btn-sm btn-neutral w-full btn-disabled";
 		let equipText = "Equip";
 		if (p.Weapon.Id == i) {
-			equipBtnClass = "ui green button disabled";
+			equipBtnClass = "btn btn-sm btn-success w-full btn-disabled";
 			equipText = "Equipped";
 		}
 		$("#weapon-" + i + "-equip").attr("class", equipBtnClass).html(equipText);
@@ -235,13 +233,13 @@ function UpdateWeapons() {
 
 //CHARACTER SKILLS TABLE
 function VehicleList() {
-	$('#Vtab').html("<thead><tr><th class='ui center aligned'>Skill</th><th class='ui center aligned'>Level</th><th class='ui center aligned'>Price</th><th class='ui center aligned'>Bonus</th><th class='ui center aligned'>Action</th></tr></thead>");
-
+	let content = "<thead><tr><th class='text-center'>Skill</th><th class='text-center'>Level</th><th class='text-center'>Price</th><th class='text-center'>Bonus</th><th class='text-center'>Action</th></tr></thead><tbody>";
+	
 	for (var i in vehicules) {
 		let vehicle = vehicules[i];
 		let PRICE = GetMultPrice(i);
-		let canBuy = PRICE > p.points ? ' basic red' : ' yellow';
-		let BUTTON = "<button class='fluid ui button" + canBuy + "' onClick='buyV(" + i + ");'>Upgrade</button>";
+		let canBuy = PRICE > p.points ? ' btn-error btn-outline' : ' btn-warning';
+		let BUTTON = "<button class='btn btn-sm w-full" + canBuy + "' onClick='buyV(" + i + ");'>Upgrade</button>";
 		let type = "";
 		let level = 0;
 		let name = "<font class='text type2'>";
@@ -254,66 +252,63 @@ function VehicleList() {
 
 		if (p.prestige.multipliers[i] > 0) level = fix(p.prestige.multipliers[i], 0);
 
-		if (p.prestige.multipliers[i] >= 1000) BUTTON = "<button class='fluid ui button basic red'>Maxed</button>";
+		if (p.prestige.multipliers[i] >= 1000) BUTTON = "<button class='btn btn-sm w-full btn-disabled'>Maxed</button>";
 
-		var vehiclesDIV = $(
+		content += (
 			"<tr>" +
-			"<td class='center aligned ui'>" + name + vehicle.name + "</font></td>" +
-			"<td class='center aligned ui'>" + level + "</font></td>" +
-			"<td class='center aligned'>" + cost + "</td>" +
-			"<td class='center aligned'>" + multiplier + "</font> " + type + "</td>" +
+			"<td class='text-center'>" + name + vehicle.name + "</font></td>" +
+			"<td class='text-center'>" + level + "</font></td>" +
+			"<td class='text-center'>" + cost + "</td>" +
+			"<td class='text-center'>" + multiplier + "</font> " + type + "</td>" +
 			"<td class='center aligned'>" + BUTTON + "</td>" +
 			"</tr>"
 		);
-		$('#Vtab').append(vehiclesDIV);
 	}
+	content += "</tbody>";
+	$('#Vtab').html(content);
 }
 
 //UI FUNCTIONS
 
-function hideVTabs() { for (var id = 1; id < 17; id++) { $("#Vtab" + id).hide(); $("#V" + id).removeClass("active"); } }
-function btnPrestigeD() { $("#btnPrestige").addClass("disabled").addClass("inverted"); }
-function btnPrestigeE() { $("#btnPrestige").removeClass("disabled").removeClass("inverted"); }
-function hideTabs() { for (var id = 1; id < 6; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("inverted basic"); } }
-function hideMenus() { for (var id = 1; id < 6; id++) { $('#modal-' + id).modal('hide'); } }
-function hideWTabs() { for (var id = 0; id < 10; id++) { $('#Wtab' + id).hide(); $("#W" + id).removeClass('active'); } }
-function hideSTabs() { for (var id = 0; id < 10; id++) { $('#Stab' + id).hide(); $("#succcess-btn-" + id).removeClass('active'); } }
+function btnPrestigeD() { $("#btnPrestige").addClass("btn-disabled"); }
+function btnPrestigeE() { $("#btnPrestige").removeClass("btn-disabled"); }
+function hideTabs() { for (var id = 1; id < 6; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("btn-active text-warning"); } }
+function hideMenus() { for (var id = 1; id < 6; id++) { document.getElementById('modal-' + id).close(); } }
+function hideWTabs() { for (var id = 0; id < 10; id++) { $('#Wtab' + id).hide(); $("#W" + id).removeClass('tab-active'); } }
+function hideSTabs() { for (var id = 0; id < 10; id++) { $('#Stab' + id).hide(); $("#succcess-btn-" + id).removeClass('tab-active'); } }
 
 function ClickEvents() {
 	$("#game-menu").on("click", "a", function () {
 		var id = $(this).data('id'); hideTabs();
 		$("#tab" + id).show();
-		$("#t" + id).addClass("yellow basic");
+		$("#t" + id).addClass("btn-active text-warning");
 		UpdateUI();
 		UpdateTabs();
 	});
 	$("#sidebar").on("click", "a", function () {
 		var id = $(this).data('id');
-		$('#modal-' + id).modal('show');
-		$('.ui.sidebar').sidebar('toggle');
+		document.getElementById('modal-' + id).showModal();
 		UpdateUI();
 	});
-	$("#mobile-bottom-nav").on("click", "a", function () {
+	$("#mobile-bottom-nav").on("click", "button", function () {
 		var id = $(this).data('id');
 		if (id == 0) {
-			$('.ui.sidebar').sidebar('toggle');
+			$("#sidebar").toggleClass("hidden flex");
 		} else {
 			hideTabs();
 			$("#tab" + id).show();
-			$("#mobile-bottom-nav a").removeClass("active green");
-			$(this).addClass("active green");
-			$("#t" + id).addClass("yellow basic");
+			$("#mobile-bottom-nav button").removeClass("active text-success bg-base-300").addClass("text-neutral-content");
+			$(this).removeClass("text-neutral-content").addClass("active text-success bg-base-300");
+			$("#t" + id).addClass("btn-active text-warning");
 			UpdateUI();
 			UpdateTabs();
 		}
 	});
-	$('#select').dropdown();
-	$('.ui.dropdown').dropdown();
-	$("#weap-select").on("click", "div", function () {
+	$("#weap-select").on("click", "a", function () {
 		var id = $(this).data('id');
 		hideWTabs();
 		$('#Wtab' + id).show();
-		$("#W" + id).addClass("active");
+		$("#W" + id).addClass("tab-active");
 	});
 	$("#ChangeObjective").on("click", function () {
 		if (p.points >= 0.5) {
@@ -321,23 +316,14 @@ function ClickEvents() {
 			NewObjective();
 		}
 	});
-	$("#veh-select").change(function () {
-		var id = $(this).val();
-		hideVTabs();
-		$('#Vtab' + id).show();
-		$("#V" + id).addClass('active');
-	});
-	$("#top-menu").on("click", "#sidebar", function () {
-		$('.ui.sidebar').sidebar('toggle');
+	$("#top-menu").on("click", "#t0", function () {
+		$("#sidebar").toggleClass("hidden flex");
 	});
 	$("#successtype").on("click", "button", function () {
 		var id = $(this).data('id');
 		hideSTabs();
 		$('#Stab' + id).show();
-		$("#succcess-btn-" + id).addClass("active");
-	});
-	$('#colonne-m').on('click', '#close', function () {
-		$(this).closest('#objective').transition('fade');
+		$("#succcess-btn-" + id).addClass("tab-active");
 	});
 	$("#closeMSG").on("click", function () {
 		hideMenus();
@@ -368,10 +354,10 @@ function SuccessList() {
 
 	for (var i in success) {
 		var succes = success[i];
-		var unlocked = p.succes[i] > 0 ? "<i class='vert check icon'></i>" : "<i class='red times icon'></i>";
+		var unlocked = p.succes[i] > 0 ? "<i class='fa-solid fa-check text-success'></i>" : "<i class='fa-solid fa-times text-error'></i>";
 
 		var succesDIV = $(
-			"<div class='ui black icon message'>" +
+			"<div class='alert shadow-lg mb-2'>" +
 			unlocked +
 			"<div class='content'><p class='text type2'>" + succes.name + "</p>" +
 			"<p>" + succes.desc + "</p></div></div>"
@@ -391,11 +377,11 @@ function showTutorial(id) {
 	p.tutorial = id;
 	$("#tutorial-title").html("Guide - " + tutorialtexts[id].title);
 	$("#tutorial-text").html(tutorialtexts[id].text);
-	if (p.tutorial == 0) { $("#tuto-prev").addClass("disabled"); } else {
-		$("#tuto-prev").removeClass("disabled");
+	if (p.tutorial == 0) { $("#tuto-prev").addClass("btn-disabled"); } else {
+		$("#tuto-prev").removeClass("btn-disabled");
 	}
-	if (p.tutorial == 6) { $("#tuto-next").addClass("disabled"); } else {
-		$("#tuto-next").removeClass("disabled");
+	if (p.tutorial == 6) { $("#tuto-next").addClass("btn-disabled"); } else {
+		$("#tuto-next").removeClass("btn-disabled");
 	}
 }
 
@@ -414,14 +400,14 @@ function PrevTuto() {
 
 function showTutorialDIV() {
 	p.fl = 0;
-	$("#modal-4").modal('show');
+	document.getElementById('modal-4').showModal();
 	showTutorial(0);
 }
 
 function MESSAGE(title, message) {
 	$("#message-title").html(title);
 	$("#message-text").html(message);
-	$("#modal-1").modal("setting", "closable", false).modal("show");
+	document.getElementById('modal-1').showModal();
 }
 
 function GetMultPrice(id) {
@@ -492,26 +478,4 @@ function countWeaponsByType() {
 	}
 
 	return typeCounts;
-}
-
-function rebuildDropdown(id) {
-	const $dropdown = $('#' + id);
-	$dropdown.dropdown('destroy');
-	$dropdown.find('.menu').empty();
-	$dropdown.find('option').each(function () {
-		const value = $(this).attr('value');
-		const text = $(this).text();
-		const $item = $('<div>').addClass('item').attr('data-value', value).text(text);
-		$dropdown.find('.menu').append($item);
-	});
-	$dropdown.dropdown();
-}
-
-function redrawTables() {
-	$("table").each(function () {
-		const parent = this.parentNode;
-		const next = this.nextSibling;
-		parent.removeChild(this);
-		parent.insertBefore(this, next);
-	});
 }
