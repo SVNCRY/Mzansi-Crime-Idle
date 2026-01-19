@@ -1,8 +1,8 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿function UpdateUI() {
+﻿﻿function UpdateUI() {
 	let ClicCashText = fix(p.Weapon.Power * (GetWeaponMult(p.Weapon.Id) + ((p.prestige.bonus + p.prestige.multipliers[1]) * 0.1) - 0.1), "full");
 	let WeaponsNBR = 0;
 	let AllWeaponsNBR = -1;
-	for (var i in weapons) { AllWeaponsNBR += 1; WeaponsNBR += p.WeaponBought[i]; }
+	for (let i in weapons) { AllWeaponsNBR += 1; WeaponsNBR += p.WeaponBought[i]; }
 	let PrestigePoints = p.rank < 400 ? 0 : Math.trunc(p.rank / 200);
 	let prestigeText = p.prestige.price[0] <= p.rank && p.prestige.price[1] <= p.cash ? texts.infos[0] : "";
 	//LEFT INFOS
@@ -86,7 +86,7 @@ function UpdateTexts() {
 	$("#character-text3").html(texts.character[4]);
 	$("#btnPrestige").val(texts.character[0]);
 	//WEAPONS TYPES BUTTONS
-	for (var weapon = 1; weapon < 9; weapon++) { $("#W" + weapon).html(texts.weapontype[weapon] + " (" + p.WeaponType[weapon] + "/" + countWeaponsByType()[weapon] + ")"); }
+	for (let weapon = 1; weapon < 9; weapon++) { $("#W" + weapon).html(texts.weapontype[weapon] + " (" + p.WeaponType[weapon] + "/" + countWeaponsByType()[weapon] + ")"); }
 	//SUCCESS
 	$("#S0").html(texts.success[1]);
 	$("#S1").html(texts.success[2]);
@@ -109,7 +109,7 @@ function UpdateTexts() {
 //MISSIONS TABLE
 function MissionList() {
 	$('#missions').html("");
-	for (var i in missions) {
+	for (let i in missions) {
 		let CONTENT = $(`
 			<div class="card bg-base-200 shadow-xl" id="mission-${i}">
 				<div class="card-body p-4">
@@ -177,11 +177,11 @@ function UpdateMissionsDiv(i) {
 
 //WEAPONS TABLE
 function WeaponList() {
-	for (var id = 1; id < 9; id++) {
+	for (let id = 1; id < 9; id++) {
 		$('#Wtab' + id).html("");
 	}
 
-	for (var i in weapons) {
+	for (let i in weapons) {
 		let CONTENT = $(`
             <div class="card bg-base-200 shadow-xl" id="weapon-${i}">
                 <figure class="px-4 pt-4">
@@ -202,7 +202,7 @@ function WeaponList() {
 }
 
 function UpdateWeapons() {
-	for (var i in weapons) {
+	for (let i in weapons) {
 		let COST = p.WeaponBought[i] < 1 ? fix(weapons[i].price, 1) : fix(weapons[i].price * 1.25, 1);
 		let PURCHASED_TEXT = p.WeaponBought[i] > 0 ? "" : `<i class="fa-solid fa-lock-keyhole"></i> `;
 		
@@ -235,7 +235,7 @@ function UpdateWeapons() {
 function VehicleList() {
 	let content = "<thead><tr><th class='text-center'>Skill</th><th class='text-center'>Level</th><th class='text-center'>Price</th><th class='text-center'>Bonus</th><th class='text-center'>Action</th></tr></thead><tbody>";
 	
-	for (var i in vehicules) {
+	for (let i in vehicules) {
 		let vehicle = vehicules[i];
 		let PRICE = GetMultPrice(i);
 		let canBuy = PRICE > p.points ? ' btn-error btn-outline' : ' btn-warning';
@@ -272,26 +272,26 @@ function VehicleList() {
 
 function btnPrestigeD() { $("#btnPrestige").addClass("btn-disabled"); }
 function btnPrestigeE() { $("#btnPrestige").removeClass("btn-disabled"); }
-function hideTabs() { for (var id = 1; id < 6; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("btn-active text-warning"); } }
-function hideMenus() { for (var id = 1; id < 6; id++) { document.getElementById('modal-' + id).close(); } }
-function hideWTabs() { for (var id = 0; id < 10; id++) { $('#Wtab' + id).hide(); $("#W" + id).removeClass('tab-active'); } }
-function hideSTabs() { for (var id = 0; id < 10; id++) { $('#Stab' + id).hide(); $("#succcess-btn-" + id).removeClass('tab-active'); } }
+function hideTabs() { for (let id = 1; id < 6; id++) { $("#tab" + id).hide(); $("#t" + id).removeClass("btn-active text-warning"); } }
+function hideMenus() { for (let id = 1; id < 6; id++) { document.getElementById('modal-' + id).close(); } }
+function hideWTabs() { for (let id = 0; id < 10; id++) { $('#Wtab' + id).hide(); $("#W" + id).removeClass('tab-active'); } }
+function hideSTabs() { for (let id = 0; id < 10; id++) { $('#Stab' + id).hide(); $("#succcess-btn-" + id).removeClass('tab-active'); } }
 
 function ClickEvents() {
 	$("#game-menu").on("click", "a", function () {
-		var id = $(this).data('id'); hideTabs();
+		let id = $(this).data('id'); hideTabs();
 		$("#tab" + id).show();
 		$("#t" + id).addClass("btn-active text-warning");
 		UpdateUI();
 		UpdateTabs();
 	});
 	$("#sidebar").on("click", "a", function () {
-		var id = $(this).data('id');
+		let id = $(this).data('id');
 		document.getElementById('modal-' + id).showModal();
 		UpdateUI();
 	});
 	$("#mobile-bottom-nav").on("click", "button", function () {
-		var id = $(this).data('id');
+		let id = $(this).data('id');
 		if (id == 0) {
 			$("#sidebar").toggleClass("hidden flex");
 		} else {
@@ -305,7 +305,7 @@ function ClickEvents() {
 		}
 	});
 	$("#weap-select").on("click", "a", function () {
-		var id = $(this).data('id');
+		let id = $(this).data('id');
 		hideWTabs();
 		$('#Wtab' + id).show();
 		$("#W" + id).addClass("tab-active");
@@ -320,7 +320,7 @@ function ClickEvents() {
 		$("#sidebar").toggleClass("hidden flex");
 	});
 	$("#successtype").on("click", "button", function () {
-		var id = $(this).data('id');
+		let id = $(this).data('id');
 		hideSTabs();
 		$('#Stab' + id).show();
 		$("#succcess-btn-" + id).addClass("tab-active");
@@ -334,10 +334,10 @@ function ClickEvents() {
 //SUCCESS MENU
 
 function SuccessCount() {
-	var succeslevel = 0;
+	let succeslevel = 0;
 
-	for (var i in success) {
-		var succes = success[i];
+	for (let i in success) {
+		const succes = success[i];
 		if (p.succes[i] > 0) { succeslevel++; }
 
 		if (succes.type == 0) { if (p.tutorial == 6) { p.succes[0] = 1; } }
@@ -350,13 +350,13 @@ function SuccessCount() {
 }
 
 function SuccessList() {
-	for (var id = 0; id < 4; id++) { $('#Stab' + id).html(""); }
+	for (let id = 0; id < 4; id++) { $('#Stab' + id).html(""); }
 
-	for (var i in success) {
-		var succes = success[i];
-		var unlocked = p.succes[i] > 0 ? "<i class='fa-solid fa-check text-success'></i>" : "<i class='fa-solid fa-times text-error'></i>";
+	for (let i in success) {
+		const succes = success[i];
+		const unlocked = p.succes[i] > 0 ? "<i class='fa-solid fa-check text-success'></i>" : "<i class='fa-solid fa-times text-error'></i>";
 
-		var succesDIV = $(
+		const succesDIV = $(
 			"<div class='alert shadow-lg mb-2'>" +
 			unlocked +
 			"<div class='content'><p class='text type2'>" + succes.name + "</p>" +
@@ -412,7 +412,7 @@ function MESSAGE(title, message) {
 
 function GetMultPrice(id) {
 	if (p.prestige.multipliers[id] == null) p.prestige.multipliers[id] = 0;
-	var price = 1;
+	let price = 1;
 	if (p.prestige.multipliers[id] >= 10) price = 1.25;
 	if (p.prestige.multipliers[id] >= 20) price = 1.5;
 	if (p.prestige.multipliers[id] >= 30) price = 2;

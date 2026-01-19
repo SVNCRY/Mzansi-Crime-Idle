@@ -102,10 +102,10 @@ function fix(number_raw, type) {
 }
 
 function getDate() {
-	var today = new Date();
-	var date = today.toLocaleDateString();
-	var time = today.toLocaleTimeString();
-	CurrentDate = date + " at " + time;
+	const today = new Date();
+	const date = today.toLocaleDateString();
+	const time = today.toLocaleTimeString();
+	const CurrentDate = date + " at " + time;
 	return CurrentDate;
 }
 
@@ -114,13 +114,13 @@ function random(min, max) {
 }
 
 function toHHMMSS(id) {
-	var sec_num = parseInt(id, 10);
-	var hours = Math.floor(sec_num / 3600);
-	var minutes = Math.floor((sec_num - hours * 3600) / 60);
-	var seconds = sec_num - hours * 3600 - minutes * 60;
-	var secondstext = 0;
-	var minutestext = 0;
-	var hourstext = 0;
+	const sec_num = parseInt(id, 10);
+	const hours = Math.floor(sec_num / 3600);
+	const minutes = Math.floor((sec_num - hours * 3600) / 60);
+	const seconds = sec_num - hours * 3600 - minutes * 60;
+	let secondstext = 0;
+	let minutestext = 0;
+	let hourstext = 0;
 	if (hours > 0) {
 		hourstext = hours + " hours ";
 	} else {
@@ -149,14 +149,14 @@ function toHHMMSS(id) {
 	if (seconds == 1) {
 		secondstext = seconds + " second ";
 	}
-	var time = hourstext + minutestext + secondstext;
+	let time = hourstext + minutestext + secondstext;
 	return time;
 }
 
 // Save and load functions
-var canSave = 1;
+let canSave = 1;
 
-var save = function () {
+const save = function () {
 	if (canSave) {
 		localStorage.setItem("idleSA1", JSON.stringify(p));
 	}
@@ -199,7 +199,7 @@ function load() {
 
 function exportSave() {
 	$("#exportBody").html("<textarea id='saveCode'>" + btoa(JSON.stringify(p)) + "</textarea>");
-	var copyText = document.getElementById("saveCode");
+	const copyText = document.getElementById("saveCode");
 	copyText.select();
 	copyText.setSelectionRange(0, 99999);
 	document.execCommand("copy");
@@ -208,16 +208,16 @@ function exportSave() {
 	$("#exportBody").html("");
 }
 
-var importSave = function () {
-	var save = prompt("Paste the code previously obtained here");
+const importSave = function () {
+	const save = prompt("Paste the code previously obtained here");
 	if (save) {
 		restoreSave(save);
 	}
 };
 
-var restoreSave = function (save) {
+const restoreSave = function (save) {
 	try {
-		var decoded = atob(save);
+		const decoded = atob(save);
 		JSON.parse(decoded);
 		if (decoded) {
 			localStorage.setItem("idleSA1", decoded);
@@ -231,8 +231,8 @@ var restoreSave = function (save) {
 	}
 };
 
-var confirmReset = function () {
-	var r = confirm("Do you really want to reset all your stats ?");
+const confirmReset = function () {
+	const r = confirm("Do you really want to reset all your stats ?");
 	if (r == true) {
 		canSave = 0;
 		localStorage.clear();

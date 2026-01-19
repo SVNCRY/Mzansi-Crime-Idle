@@ -71,7 +71,7 @@ function getRegionUnlockProgress(regionId) {
         prevReq = regions[regionId - 1].reqRank;
     }
 
-    if (currentReq === 0) return 100;
+    if (currentReq <= prevReq) return 100; // Avoid division by zero
 
     var progress = ((p.rank - prevReq) / (currentReq - prevReq)) * 100;
     return Math.max(0, Math.min(100, progress));
